@@ -1,0 +1,147 @@
+﻿char,codepoint,glyph_name,block,advance,xmin,ymin,xmax,ymax,width,height,contours,hinted,vs_v5,dxmin,dymin,dxmax,dymax,dadvance,notes
+̀,U+0300,gravecomb,COMBINING,0,6,975,410,1277,404,302,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+́,U+0301,acutecomb,COMBINING,0,501,978,872,1305,371,327,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̂,U+0302,uni0302,COMBINING,0,477,979,922,1320,445,341,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̃,U+0303,tildecomb,COMBINING,0,409,977,914,1155,505,178,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̄,U+0304,uni0304,COMBINING,0,470,1033,930,1119,460,86,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̆,U+0306,uni0306,COMBINING,0,510,970,884,1148,374,178,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̇,U+0307,uni0307,COMBINING,0,561,648,726,813,165,165,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̈,U+0308,uni0308,COMBINING,0,449,978,949,1143,500,165,2,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̊,U+030A,uni030A,COMBINING,0,528,1009,871,1349,343,340,2,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̋,U+030B,uni030B,COMBINING,0,300,906,940,1253,640,347,2,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̌,U+030C,uni030C,COMBINING,0,477,979,922,1320,445,341,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̏,U+030F,uni030F,COMBINING,0,300,906,940,1253,640,347,2,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̑,U+0311,uni0311,COMBINING,0,433,970,807,1148,374,178,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̦,U+0326,uni0326,COMBINING,0,538,-210,761,168,223,378,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̧,U+0327,uni0327,COMBINING,0,28,-401,180,0,152,401,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+̨,U+0328,uni0328,COMBINING,0,503,-407,737,20,234,427,1,yes,unchanged,0,0,0,0,0,"combining mark, advance 0"
+Ѐ,U+0400,uni0400,MK_SR,1240,104,0,1137,1593,1033,1593,2,yes,changed,0,0,0,86,0,accented letter
+Ё,U+0401,afii10023,RU_CAPS,1240,104,0,1137,1474,1033,1474,3,yes,unchanged,0,0,0,0,0,accented letter
+Ђ,U+0402,uni0402,MK_SR,1240,181,-300,1060,1171,879,1471,2,yes,unchanged,0,0,0,0,0,
+Ѓ,U+0403,uni0403,MK_SR,1240,163,0,1078,1618,915,1618,2,yes,changed,-23,0,24,447,0,accented letter
+Є,U+0404,uni0404,UA,1240,113,-17,1127,1187,1014,1204,1,yes,unchanged,0,0,0,0,0,
+Ѕ,U+0405,afii10102,MK_SR,1240,226,-17,1015,1187,789,1204,1,yes,unchanged,0,0,0,0,0,
+І,U+0406,afii10103,UA,1240,227,0,1013,1171,786,1171,1,yes,unchanged,0,0,0,0,0,
+Ї,U+0407,afii10105,UA,1240,227,0,1013,1474,786,1474,3,yes,unchanged,0,0,0,0,0,accented letter
+Ј,U+0408,uni0408,MK_SR,1240,152,-13,1089,1171,937,1184,1,yes,unchanged,0,0,0,0,0,
+Љ,U+0409,uni0409,MK_SR,1240,59,-5,1182,1171,1123,1176,2,yes,changed,0,42,0,0,0,
+Њ,U+040A,uni040A,MK_SR,1240,65,0,1176,1171,1111,1171,3,yes,changed,-24,0,24,0,0,
+Ћ,U+040B,uni040B,MK_SR,1240,235,0,1006,1171,771,1171,2,yes,changed,1,0,0,0,0,
+Ќ,U+040C,uni040C,MK_SR,1240,15,0,1225,1618,1210,1618,2,yes,changed,0,0,0,447,0,accented letter
+Ѝ,U+040D,uni040D,MK_SR,1240,69,-16,1172,1593,1103,1609,2,yes,changed,0,0,0,86,0,accented letter
+Ў,U+040E,uni040E,BE,1240,10,-371,1230,1465,1220,1836,2,yes,changed,0,15,0,-63,0,accented letter
+Џ,U+040F,uni040F,MK_SR,1240,85,-300,1156,1171,1071,1471,1,yes,changed,-24,0,24,0,0,
+А,U+0410,afii10017,RU_CAPS,1240,33,0,1207,1171,1174,1171,2,yes,unchanged,0,0,0,0,0,
+Б,U+0411,afii10018,RU_CAPS,1240,146,0,1095,1171,949,1171,3,yes,changed,-13,0,14,0,0,
+В,U+0412,afii10019,RU_CAPS,1240,162,0,1078,1171,916,1171,3,yes,unchanged,0,0,0,0,0,
+Г,U+0413,afii10020,RU_CAPS,1240,163,0,1078,1171,915,1171,1,yes,changed,-23,0,24,0,0,
+Д,U+0414,afii10021,RU_CAPS,1240,151,0,1089,1171,938,1171,2,yes,changed,1,0,-1,-28,0,
+Е,U+0415,afii10022,RU_CAPS,1240,104,0,1137,1171,1033,1171,1,yes,unchanged,0,0,0,0,0,
+Ж,U+0416,afii10024,RU_CAPS,1240,50,0,1190,1171,1140,1171,1,yes,unchanged,0,0,0,0,0,
+З,U+0417,afii10025,RU_CAPS,1240,143,-17,1093,1187,950,1204,1,yes,changed,0,69,0,-19,0,
+И,U+0418,afii10026,RU_CAPS,1240,69,-16,1172,1171,1103,1187,1,yes,unchanged,0,0,0,0,0,
+Й,U+0419,afii10027,RU_CAPS,1240,69,-16,1172,1465,1103,1481,2,yes,changed,0,0,0,22,0,accented letter
+К,U+041A,afii10028,RU_CAPS,1240,15,0,1225,1171,1210,1171,1,yes,unchanged,0,0,0,0,0,
+Л,U+041B,afii10029,RU_CAPS,1240,46,0,1194,1171,1148,1171,1,yes,changed,0,7,0,0,0,
+М,U+041C,afii10030,RU_CAPS,1240,20,0,1220,1171,1200,1171,1,yes,unchanged,0,0,0,0,0,
+Н,U+041D,afii10031,RU_CAPS,1240,93,0,1147,1171,1054,1171,1,yes,unchanged,0,0,0,0,0,
+О,U+041E,afii10032,RU_CAPS,1240,108,-17,1132,1187,1024,1204,2,yes,unchanged,0,0,0,0,0,
+П,U+041F,afii10033,RU_CAPS,1240,104,0,1136,1171,1032,1171,1,yes,changed,-28,0,28,0,0,
+Р,U+0420,afii10034,RU_CAPS,1240,148,0,1093,1171,945,1171,2,yes,unchanged,0,0,0,0,0,
+С,U+0421,afii10035,RU_CAPS,1240,113,-17,1127,1187,1014,1204,1,yes,unchanged,0,0,0,0,0,
+Т,U+0422,afii10036,RU_CAPS,1240,121,0,1119,1171,998,1171,1,yes,unchanged,0,0,0,0,0,
+У,U+0423,afii10037,RU_CAPS,1240,10,-371,1230,1171,1220,1542,1,yes,changed,0,15,0,0,0,
+Ф,U+0424,afii10038,RU_CAPS,1240,108,-120,1132,1300,1024,1420,3,yes,unchanged,0,0,0,0,0,
+Х,U+0425,afii10039,RU_CAPS,1240,102,0,1139,1171,1037,1171,1,yes,unchanged,0,0,0,0,0,
+Ц,U+0426,afii10040,RU_CAPS,1240,104,-350,1136,1171,1032,1521,1,yes,changed,5,-50,-5,0,0,6.020: U-body (П/п flipped) + Щ-style tail
+Ч,U+0427,afii10041,RU_CAPS,1240,95,0,1146,1171,1051,1171,1,yes,changed,-48,0,48,0,0,
+Ш,U+0428,afii10042,RU_CAPS,1240,153,0,1088,1171,935,1171,1,yes,unchanged,0,0,0,0,0,
+Щ,U+0429,afii10043,RU_CAPS,1240,120,-350,1120,1171,1000,1521,1,yes,changed,15,-50,-15,0,0,
+Ъ,U+042A,afii10044,RU_CAPS,1240,178,0,1063,1171,885,1171,2,yes,unchanged,0,0,0,0,0,
+Ы,U+042B,afii10045,RU_CAPS,1240,52,0,1188,1171,1136,1171,3,yes,changed,-118,0,118,0,0,
+Ь,U+042C,afii10046,RU_CAPS,1240,198,0,1043,1171,845,1171,2,yes,changed,-23,0,24,0,0,
+Э,U+042D,afii10047,RU_CAPS,1240,113,-17,1127,1187,1014,1204,1,yes,unchanged,0,0,0,0,0,
+Ю,U+042E,afii10048,RU_CAPS,1240,35,-17,1205,1187,1170,1204,2,yes,changed,-9,0,9,0,0,
+Я,U+042F,afii10049,RU_CAPS,1240,103,0,1138,1171,1035,1171,2,yes,unchanged,0,0,0,0,0,
+а,U+0430,afii10065,RU_LOWS,1240,185,-16,1056,813,871,829,2,yes,unchanged,0,0,0,0,0,
+б,U+0431,afii10066,RU_LOWS,1240,221,0,1019,1140,798,1140,2,yes,changed,-14,0,13,0,0,
+в,U+0432,afii10067,RU_LOWS,1240,180,0,1060,835,880,835,4,yes,changed,-24,0,23,0,0,
+г,U+0433,afii10068,RU_LOWS,1240,209,0,1032,813,823,813,1,yes,unchanged,0,0,0,0,0,
+д,U+0434,afii10069,RU_LOWS,1240,165,-140,1075,813,910,953,2,yes,unchanged,0,0,0,0,0,
+е,U+0435,afii10070,RU_LOWS,1240,219,-17,1022,813,803,830,2,yes,unchanged,0,0,0,0,0,
+ж,U+0436,afii10072,RU_LOWS,1240,148,0,1093,813,945,813,1,yes,unchanged,0,0,0,0,0,
+з,U+0437,afii10073,RU_LOWS,1240,289,-17,950,813,661,830,1,yes,changed,0,47,0,-26,0,
+и,U+0438,afii10074,RU_LOWS,1240,127,0,1113,813,986,813,1,yes,unchanged,0,0,0,0,0,
+й,U+0439,afii10075,RU_LOWS,1240,127,0,1113,1107,986,1107,2,yes,changed,0,0,0,38,0,accented letter
+к,U+043A,afii10076,RU_LOWS,1240,133,0,1107,813,974,813,1,yes,changed,2,0,-2,-369,0,
+л,U+043B,afii10077,RU_LOWS,1240,91,0,1149,814,1058,814,1,yes,changed,-1,9,0,-6,0,
+м,U+043C,afii10078,RU_LOWS,1240,79,0,1161,821,1082,821,1,yes,unchanged,0,0,0,0,0,
+н,U+043D,afii10079,RU_LOWS,1240,127,0,1113,813,986,813,1,yes,unchanged,0,0,0,0,0,
+о,U+043E,afii10080,RU_LOWS,1240,196,-17,1044,813,848,830,2,yes,unchanged,0,0,0,0,0,
+п,U+043F,afii10081,RU_LOWS,1240,127,0,1113,813,986,813,1,yes,unchanged,0,0,0,0,0,
+р,U+0440,afii10082,RU_LOWS,1240,158,-370,1083,813,925,1183,2,yes,unchanged,0,0,0,0,0,
+с,U+0441,afii10083,RU_LOWS,1240,222,-17,1018,813,796,830,1,yes,unchanged,0,0,0,0,0,
+т,U+0442,afii10084,RU_LOWS,1240,230,0,1010,813,780,813,1,yes,unchanged,0,0,0,0,0,
+у,U+0443,afii10085,RU_LOWS,1240,125,-371,1115,813,990,1184,1,yes,changed,0,-1,0,-36,0,
+ф,U+0444,afii10086,RU_LOWS,1240,196,-260,1044,960,848,1220,3,yes,unchanged,0,0,0,0,0,
+х,U+0445,afii10087,RU_LOWS,1240,161,0,1080,774,919,774,1,yes,unchanged,0,0,0,0,0,
+ц,U+0446,afii10088,RU_LOWS,1240,127,-330,1113,813,986,1143,1,yes,changed,38,-50,-39,0,0,6.020: U-body (П/п flipped) + Щ-style tail
+ч,U+0447,afii10089,RU_LOWS,1240,77,0,1164,813,1087,813,1,yes,changed,-23,0,24,0,0,
+ш,U+0448,afii10090,RU_LOWS,1240,165,0,1075,813,910,813,1,yes,unchanged,0,0,0,0,0,
+щ,U+0449,afii10091,RU_LOWS,1240,152,-330,1089,813,937,1143,1,yes,changed,63,-50,-62,0,0,
+ъ,U+044A,afii10092,RU_LOWS,1240,178,0,1063,817,885,817,3,yes,unchanged,0,0,0,0,0,
+ы,U+044B,afii10093,RU_LOWS,1240,47,0,1193,813,1146,813,3,yes,changed,-94,0,94,0,0,
+ь,U+044C,afii10094,RU_LOWS,1240,188,0,1053,813,865,813,3,yes,changed,1,0,0,0,0,
+э,U+044D,afii10095,RU_LOWS,1240,222,-17,1018,813,796,830,1,yes,unchanged,0,0,0,0,0,
+ю,U+044E,afii10096,RU_LOWS,1240,105,-15,1135,815,1030,830,2,yes,changed,-24,0,23,0,0,
+я,U+044F,afii10097,RU_LOWS,1240,127,-1,1113,813,986,814,2,yes,changed,-25,31,24,0,0,
+ѐ,U+0450,uni0450,MK_SR,1240,219,-17,1022,1235,803,1252,3,yes,changed,0,0,0,86,0,accented letter
+ё,U+0451,afii10071,RU_LOWS,1240,219,-17,1022,1100,803,1117,4,yes,unchanged,0,0,0,0,0,accented letter
+ђ,U+0452,uni0452,MK_SR,1240,181,-300,1060,1120,879,1420,2,yes,unchanged,0,0,0,0,0,
+ѓ,U+0453,uni0453,MK_SR,1240,209,0,1032,1260,823,1260,2,yes,changed,0,0,0,447,0,accented letter
+є,U+0454,uni0454,UA,1240,222,-17,1018,813,796,830,1,yes,unchanged,0,0,0,0,0,
+ѕ,U+0455,afii10101,MK_SR,1240,264,-17,976,813,712,830,1,yes,unchanged,0,0,0,0,0,
+і,U+0456,afii10104,UA,1240,179,0,1062,1171,883,1171,2,yes,unchanged,0,0,0,0,0,
+ї,U+0457,afii10106,UA,1240,179,0,1062,1100,883,1100,3,yes,unchanged,0,0,0,0,0,accented letter
+ј,U+0458,uni0458,MK_SR,1240,322,-310,918,1171,596,1481,2,yes,unchanged,0,0,0,0,0,
+љ,U+0459,uni0459,MK_SR,1240,144,-5,1097,814,953,819,2,yes,changed,0,42,0,-6,0,
+њ,U+045A,uni045A,MK_SR,1240,95,0,1146,813,1051,813,3,yes,changed,-34,0,34,0,0,
+ћ,U+045B,uni045B,MK_SR,1240,235,0,1006,1120,771,1120,2,yes,changed,1,0,0,0,0,
+ќ,U+045C,uni045C,MK_SR,1240,133,0,1107,1260,974,1260,2,yes,changed,2,0,-2,78,0,accented letter
+ѝ,U+045D,uni045D,MK_SR,1240,127,0,1113,1235,986,1235,2,yes,changed,0,0,0,86,0,accented letter
+ў,U+045E,uni045E,BE,1240,125,-371,1115,1107,990,1478,2,yes,changed,0,-1,0,-47,0,accented letter
+џ,U+045F,uni045F,MK_SR,1240,120,-280,1121,813,1001,1093,1,yes,changed,-29,0,29,82,0,
+Ґ,U+0490,uni0490,UA,1240,155,0,1085,1361,930,1361,1,yes,changed,-24,0,24,0,0,
+ґ,U+0491,uni0491,UA,1240,179,0,1062,983,883,983,1,yes,unchanged,0,0,0,0,0,
+Ҷ,U+04B6,uni04B6,EXT,1240,50,0,1190,1469,1140,1469,2,yes,changed,0,0,0,86,0,U+04B6/04B7: actually Zhe+breve (same as U+04C1/04C2); Unicode expects Che with descender
+ҷ,U+04B7,uni04B7,EXT,1240,148,0,1093,1111,945,1111,2,yes,changed,0,0,0,86,0,U+04B6/04B7: actually Zhe+breve (same as U+04C1/04C2); Unicode expects Che with descender
+Ӂ,U+04C1,uni04C1,EXT,1240,50,0,1190,1469,1140,1469,2,yes,changed,0,0,0,86,0,
+ӂ,U+04C2,uni04C2,EXT,1240,148,0,1093,1111,945,1111,2,yes,changed,0,0,0,86,0,
+Ӑ,U+04D0,uni04D0,EXT,1240,33,0,1207,1469,1174,1469,3,yes,changed,0,0,0,86,0,
+ӑ,U+04D1,uni04D1,EXT,1240,185,-16,1056,1111,871,1127,3,yes,changed,0,0,0,86,0,
+Ӓ,U+04D2,uni04D2,EXT,1240,33,0,1207,1456,1174,1456,4,yes,changed,0,0,0,86,0,
+ӓ,U+04D3,uni04D3,EXT,1240,185,-16,1056,1098,871,1114,4,yes,changed,0,0,0,86,0,
+Ӗ,U+04D6,uni04D6,EXT,1240,104,0,1137,1469,1033,1469,2,yes,changed,0,0,0,86,0,
+ӗ,U+04D7,uni04D7,EXT,1240,219,-17,1022,1111,803,1128,3,yes,changed,0,0,0,86,0,
+Ӝ,U+04DC,uni04DC,EXT,1240,50,0,1190,1456,1140,1456,3,yes,changed,0,0,0,86,0,
+ӝ,U+04DD,uni04DD,EXT,1240,148,0,1093,1098,945,1098,3,yes,changed,0,0,0,86,0,
+Ӟ,U+04DE,uni04DE,EXT,1240,143,-17,1093,1473,950,1490,3,yes,changed,0,69,0,67,0,
+ӟ,U+04DF,uni04DF,EXT,1240,289,-17,950,1099,661,1116,3,yes,changed,0,47,0,60,0,
+Ӣ,U+04E2,uni04E2,EXT,1240,69,-16,1172,1377,1103,1393,2,yes,changed,0,0,0,86,0,
+ӣ,U+04E3,uni04E3,EXT,1240,127,0,1113,1019,986,1019,2,yes,changed,0,0,0,86,0,
+Ӥ,U+04E4,uni04E4,EXT,1240,69,-16,1172,1456,1103,1472,3,yes,changed,0,0,0,86,0,
+ӥ,U+04E5,uni04E5,EXT,1240,127,0,1113,1098,986,1098,3,yes,changed,0,0,0,86,0,
+Ӧ,U+04E6,uni04E6,EXT,1240,108,-17,1132,1472,1024,1489,4,yes,changed,0,0,0,86,0,
+ӧ,U+04E7,uni04E7,EXT,1240,196,-17,1044,1098,848,1115,4,yes,changed,0,0,0,86,0,
+Ӯ,U+04EE,uni04EE,EXT,1240,10,-371,1230,1377,1220,1748,2,yes,changed,0,15,0,86,0,
+ӯ,U+04EF,uni04EF,EXT,1240,125,-371,1115,1019,990,1390,2,yes,changed,0,-1,0,50,0,
+Ӱ,U+04F0,uni04F0,EXT,1240,10,-371,1230,1456,1220,1827,3,yes,changed,0,15,0,86,0,
+ӱ,U+04F1,uni04F1,EXT,1240,125,-371,1115,1098,990,1469,3,yes,changed,0,-1,0,50,0,
+Ӳ,U+04F2,uni04F2,EXT,1240,10,-371,1230,1638,1220,2009,3,yes,changed,0,15,0,86,0,
+ӳ,U+04F3,uni04F3,EXT,1240,125,-371,1115,1280,990,1651,3,yes,changed,0,-1,0,50,0,
+Ӵ,U+04F4,uni04F4,EXT,1240,95,0,1146,1456,1051,1456,3,yes,changed,-48,0,48,86,0,
+ӵ,U+04F5,uni04F5,EXT,1240,77,0,1164,1098,1087,1098,3,yes,changed,-23,0,24,86,0,
+Ӹ,U+04F8,uni04F8,EXT,1240,52,0,1188,1456,1136,1456,5,yes,changed,-118,0,118,86,0,
+ӹ,U+04F9,uni04F9,EXT,1240,47,0,1193,1098,1146,1098,5,yes,changed,-94,0,94,86,0,
+₽,U+20BD,uni20BD,PUNCT,1240,148,0,1093,1171,945,1171,3,yes,unchanged,0,0,0,0,0,punctuation
+№,U+2116,uni2116,PUNCT,1240,85,-16,1155,1171,1070,1187,4,yes,unchanged,0,0,0,0,0,punctuation

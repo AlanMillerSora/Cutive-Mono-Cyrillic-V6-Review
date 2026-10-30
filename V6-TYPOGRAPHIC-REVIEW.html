@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cutive Mono Cyrillic 6.020 — типографическое ревью</title>
+<style>
+:root{
+  --bg:#0e1014; --bg2:#12151b; --panel:#171b22; --panel2:#1d222b;
+  --text:#e9e4da; --muted:#a69f93; --dim:#78726a;
+  --accent:#d7a86e; --accent2:#8fb7ff; --border:#2a303a; --border2:#3a4250;
+  --good:#7fc39a; --warn:#e0b36a; --bad:#e58b8b;
+  --sample-size:16px;
+  --font-main:"V6Review", monospace;
+}
+@font-face{font-family:"V6Review";src:url("fonts/installed-v6.ttf") format("truetype");font-weight:400;font-style:normal;font-display:block;}
+@font-face{font-family:"OriginalReview";src:url("fonts/original-cutive-mono.ttf") format("truetype");font-weight:400;font-style:normal;font-display:block;}
+*{box-sizing:border-box;}
+html{color-scheme:dark;scroll-behavior:smooth;}
+body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#1a2030 0%,transparent 60%),radial-gradient(900px 500px at 100% 0%,#241a18 0%,transparent 55%),var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55;}
+body[data-mode="original"]{--font-main:"OriginalReview","DejaVu Sans Mono","Liberation Mono",monospace;}
+body[data-mode="system"]{--font-main:"DejaVu Sans Mono","Liberation Mono",monospace;}
+a{color:var(--accent2);text-decoration:none;} a:hover{text-decoration:underline;}
+.wrap{max-width:1500px;margin:0 auto;padding:0 24px;}
+.hero{padding:54px 0 22px;}
+.hero h1{font-size:clamp(28px,4vw,48px);line-height:1.1;margin:0 0 12px;letter-spacing:-.02em;}
+.hero .sub{max-width:1000px;color:var(--muted);font-size:15px;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+.chip{border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted);max-width:100%;overflow-wrap:anywhere;word-break:break-word;}
+.chip b{color:var(--text);font-weight:600;}
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(14,16,20,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+.toolbar-inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px 0;}
+.mode-btn,.filter-btn{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 11px;cursor:pointer;font:inherit;font-size:13px;}
+.mode-btn[aria-pressed="true"],.filter-btn[aria-pressed="true"]{border-color:var(--accent);background:#2a2118;color:var(--accent);}
+.mode-btn:hover,.filter-btn:hover{border-color:var(--border2);}
+.slider{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
+.slider input{width:150px;accent-color:var(--accent);}
+.slider output{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--text);min-width:48px;text-align:right;}
+.mode-status{font-size:12px;color:var(--muted);margin-left:auto;}
+.status{font-size:11px;border-radius:999px;padding:3px 8px;border:1px solid var(--border);white-space:nowrap;}
+.status.good{color:var(--good);border-color:#2e5a44;background:#14231b;}
+.status.warn{color:var(--warn);border-color:#5a4a2e;background:#231f14;}
+.status.bad{color:var(--bad);border-color:#5a2e2e;background:#231414;}
+.section{padding:42px 0;border-top:1px solid var(--border);}
+.section h2{font-size:25px;margin:0 0 8px;letter-spacing:-.01em;}
+.section h3{font-size:17px;margin:24px 0 8px;}
+.lede{color:var(--muted);max-width:1000px;font-size:14px;}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;}
+.mode-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.mode-card h3{margin:0 0 6px;font-size:15px;color:var(--accent);}
+.mode-card p{margin:0;color:var(--muted);font-size:13px;overflow-wrap:anywhere;word-break:break-word;}
+.mode-card code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere;word-break:break-word;}
+.alphabet-block{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;}
+.alphabet-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:6px;}
+.alphabet-line{font-family:var(--font-main);font-size:var(--sample-size);line-height:1.55;white-space:nowrap;overflow-x:auto;padding:4px 0;}
+.glyph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;margin-top:18px;}
+.glyph-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0;}
+.glyph-card .pair{font-size:13px;color:var(--accent);font-weight:600;letter-spacing:.02em;}
+.glyph-card .badge{float:right;font-size:10px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 7px;font-weight:400;}
+.glyph-display{font-family:var(--font-main);font-size:120px;line-height:1.35;margin:8px 0 2px;min-height:160px;white-space:nowrap;overflow-x:auto;}
+.latin-ref{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;color:var(--muted);font-size:11px;border-top:1px dashed var(--border);padding-top:8px;}
+.latin-ref .latin{font-family:var(--font-main);font-size:40px;line-height:1.2;color:var(--dim);max-width:100%;overflow-x:auto;}
+.metrics{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;margin:10px 0;}
+.metrics dt{color:var(--muted);} .metrics dd{margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.note{color:var(--muted);font-size:12.5px;line-height:1.5;margin:0;}
+.tse-hero{font-family:var(--font-main);font-size:240px;line-height:1;text-align:center;padding:18px 0 8px;white-space:nowrap;overflow-x:auto;}
+.compare{font-family:var(--font-main);font-size:140px;line-height:1.25;white-space:nowrap;overflow-x:auto;padding:10px 0;}
+.table-wrap{overflow:auto;max-height:75vh;border:1px solid var(--border);border-radius:12px;margin-top:14px;}
+table{border-collapse:collapse;width:100%;font-size:12px;}
+th{position:sticky;top:0;background:var(--panel2);z-index:1;text-align:left;padding:8px 10px;border-bottom:1px solid var(--border2);color:var(--muted);font-weight:600;white-space:nowrap;}
+td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+tr:hover td{background:#1b2028;}
+.glyph-cell{font-family:var(--font-main);font-size:22px;line-height:1.2;}
+.delta{color:var(--warn);} .unchanged{color:var(--dim);}
+.small{font-size:10.5px;color:var(--dim);}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0;}
+.search{background:var(--panel);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:7px 10px;font:inherit;font-size:13px;min-width:260px;}
+.text-block{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:10px 0;}
+.text-label{font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.sample{font-family:var(--font-main);font-size:var(--sample-size);line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
+.size-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:10px 0;}
+.size-card summary{cursor:pointer;color:var(--muted);font-size:13px;}
+.size-card summary b{color:var(--accent);}
+.size-row{display:flex;gap:14px;align-items:baseline;white-space:nowrap;overflow-x:auto;padding:5px 0;border-top:1px dashed var(--border);}
+.size-tag{flex:0 0 58px;color:var(--accent);font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.sample-line{font-family:var(--font-main);line-height:1.35;}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(430px,1fr));gap:18px;margin-top:16px;}
+figure{margin:0;background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+figure img{width:100%;height:auto;display:block;background:#fdfcf8;}
+figcaption{padding:10px 12px;color:var(--muted);font-size:12px;line-height:1.45;}
+.tech-table td:first-child{color:var(--muted);white-space:nowrap;}
+.tech-table td{font-size:12px;}
+.footer{padding:28px 0 60px;color:var(--dim);font-size:12px;border-top:1px solid var(--border);}
+.footer code{color:var(--muted);}
+.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#222833;border:1px solid var(--border2);border-radius:4px;padding:1px 5px;font-size:11px;}
+ul.clean{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:13px;}
+ul.clean li{margin:4px 0;}
+@media (max-width:700px){.wrap{padding:0 14px}.glyph-display{font-size:84px;min-height:120px}.tse-hero{font-size:150px}.compare{font-size:88px}.hero{padding-top:34px}.mode-status{width:100%;margin-left:0}}
+</style>
+</head>
+<body data-mode="v6">
+<header class="hero"><div class="wrap">
+<h1>Cutive Mono Cyrillic 6.020<br><span style="color:var(--muted);font-size:.55em;font-weight:400">диагностический пакет для независимого типографического ревью</span></h1>
+<p class="sub">Установленный TTF, оригинальная латиница, полный алфавит, контрольные тексты, размеры 11–24 px, отдельный разбор Ц/ц и технический паспорт. Страница ничего не устанавливает и не меняет: она только показывает копии файлов из <code>fonts/</code>.</p>
+<div class="chips">
+<span class="chip">Семейство: <b>Cutive Mono Cyrillic</b></span>
+<span class="chip">Версия: <b>6.020</b></span>
+<span class="chip">Font Revision: <b>6.020004</b></span>
+<span class="chip">UPM: <b>2048</b></span>
+<span class="chip">Глифы: <b>582</b> · cmap: <b>577</b></span>
+<span class="chip">SHA-256: <b>aaf8154e9983c661e88c…</b></span>
+<span class="chip" id="font-status">Проверка загрузки шрифта…</span>
+</div>
+</div></header>
+
+<div class="toolbar"><div class="wrap toolbar-inner">
+<button class="mode-btn" data-mode="v6" aria-pressed="true">V6 · установленный</button>
+<button class="mode-btn" data-mode="original" aria-pressed="false">Оригинальный Cutive Mono</button>
+<button class="mode-btn" data-mode="system" aria-pressed="false">Системный fallback</button>
+<label class="slider">Кегль <input id="size" type="range" min="11" max="32" value="16"><output id="size-out">16 px</output></label>
+<span class="mode-status" id="mode-status">V6 · установленный TTF</span>
+</div></div>
+
+<main class="wrap">
+<section class="section" id="how">
+<h2>Как читать этот пакет</h2>
+<p class="lede">Переключатель вверху меняет источник рисунка для всех образцов. Крупные карточки важных глифов имеют фиксированный кегль 120 px; остальные образцы слушают ползунок 11–32 px.</p>
+<div class="grid-2">
+<div class="mode-card"><h3>V6 · установленный</h3><p>Локальная копия <code>fonts/installed-v6.ttf</code> — побайтовая копия установленного файла <code>/home/sora/.local/share/fonts/CutiveMonoCyrillic/CutiveMono-Cyrillic-Regular.ttf</code>. SHA-256 совпадает с проектной сборкой: <b>да</b>. Это единственный режим, где кириллица идёт из V6.</p></div>
+<div class="mode-card"><h3>Оригинальный Cutive Mono 1.110</h3><p><code>fonts/original-cutive-mono.ttf</code> — донорская латиница. Кириллицы в оригинале нет; в этом режиме кириллица ожидаемо уйдёт в системный fallback. Это не ошибка страницы, а часть сравнения.</p></div>
+<div class="mode-card"><h3>Системный fallback</h3><p>Стек <code>"DejaVu Sans Mono", "Liberation Mono", monospace</code>. Специально не включает «Cutive Mono Cyrillic», чтобы не подменить V6 установленной системной копией. Это отдельный рисунок для сравнения метрик и ритма.</p></div>
+</div>
+<p class="lede" style="margin-top:14px">Если браузер не загружает локальный шрифт при открытии через <code>file://</code>, запустите в папке <code>V6-REVIEW</code>: <span class="kbd">python3 -m http.server 8000</span> и откройте <code>http://localhost:8000/V6-TYPOGRAPHIC-REVIEW.html</code>. Индикатор загрузки — в шапке.</p>
+</section>
+
+<section class="section" id="alphabet">
+<h2>Полный алфавит</h2>
+<p class="lede">Все 33 заглавных и 33 строчных, расширенная кириллица и пунктуация. Ниже — таблица метрик всех 128 кириллических кодпоинтов, 16 комбинируемых знаков и №/₽.</p>
+<div class="alphabet-block"><div class="alphabet-label">Заглавные · 33</div><div class="alphabet-line">АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ</div></div>
+<div class="alphabet-block"><div class="alphabet-label">Строчные · 33</div><div class="alphabet-line">абвгдеёжзийклмнопрстуфхцчшщъыьэюя</div></div>
+<div class="alphabet-block"><div class="alphabet-label">Украинские · Ґ ґ Є є І і Ї ї</div><div class="alphabet-line">ҐґЄєІіЇї</div></div>
+<div class="alphabet-block"><div class="alphabet-label">Белорусские · Ў ў</div><div class="alphabet-line">Ўў</div></div>
+<div class="alphabet-block"><div class="alphabet-label">Сербские / македонские · Ѐ ѐ Ѝ ѝ Ј ј Ѕ ѕ Ѓ ѓ Ќ ќ Љ љ Њ њ Џ џ Ђ ђ Ћ ћ</div><div class="alphabet-line">ЀѐЍѝЈјЅѕЃѓЌќЉљЊњЏџЂђЋћ</div></div>
+<div class="alphabet-block"><div class="alphabet-label">Расширенная кириллица · композиты</div><div class="alphabet-line">ҶҷӁӂӐӑӒӓӖӗӜӝӞӟӢӣӤӥӦӧӮӯӰӱӲӳӴӵӸӹ</div></div>
+<div class="panel" style="border-color:#5a2e2e;background:#231414;margin:14px 0"><b style="color:var(--bad)">Найдено несоответствие:</b> U+04B6/Ҷ и U+04B7/ҷ собраны как <b>Zhe + breve</b> (совпадают с U+04C1/Ӂ и U+04C2/ӂ), а Unicode ожидает <b>Che with descender</b>. Это не изменение 6.020: то же в V5 и 6.010. Шрифт не исправлялся. <a href="#screens">См. extended-issue.png</a>.</div>
+<div class="alphabet-block"><div class="alphabet-label">Пунктуация · № ₽</div><div class="alphabet-line">№ ₽</div></div>
+
+<h3>Метрики глифов</h3>
+<div class="filters">
+<button class="filter-btn" data-block="ALL" aria-pressed="true">Все · 146</button>
+<button class="filter-btn" data-block="RU" aria-pressed="false">Русские · 66</button>
+<button class="filter-btn" data-block="EXT" aria-pressed="false">Расширенные · 62</button>
+<button class="filter-btn" data-block="PUNCT" aria-pressed="false">Пунктуация · 2</button>
+<button class="filter-btn" data-block="COMBINING" aria-pressed="false">Комбинируемые · 16</button>
+<input class="search" id="search" type="search" placeholder="Поиск: буква, U+04xx, имя глифа…">
+</div>
+<div class="table-wrap"><table id="glyph-table"><thead><tr><th>Глиф</th><th>Unicode</th><th>Имя</th><th>Advance</th><th>BBox (font units)</th><th>Ш×В</th><th>Контуры</th><th>Хинт</th><th>Δ к V5</th></tr></thead><tbody>
+<tr data-block="COMBINING" data-search="̀ u+0300 gravecomb combining"><td class="glyph-cell">◌̀</td><td class="mono">U+0300</td><td class="mono">gravecomb</td><td class="mono">0</td><td class="mono">6…410 × 975…1277</td><td class="mono">404×302</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="́ u+0301 acutecomb combining"><td class="glyph-cell">◌́</td><td class="mono">U+0301</td><td class="mono">acutecomb</td><td class="mono">0</td><td class="mono">501…872 × 978…1305</td><td class="mono">371×327</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̂ u+0302 uni0302 combining"><td class="glyph-cell">◌̂</td><td class="mono">U+0302</td><td class="mono">uni0302</td><td class="mono">0</td><td class="mono">477…922 × 979…1320</td><td class="mono">445×341</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̃ u+0303 tildecomb combining"><td class="glyph-cell">◌̃</td><td class="mono">U+0303</td><td class="mono">tildecomb</td><td class="mono">0</td><td class="mono">409…914 × 977…1155</td><td class="mono">505×178</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̄ u+0304 uni0304 combining"><td class="glyph-cell">◌̄</td><td class="mono">U+0304</td><td class="mono">uni0304</td><td class="mono">0</td><td class="mono">470…930 × 1033…1119</td><td class="mono">460×86</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̆ u+0306 uni0306 combining"><td class="glyph-cell">◌̆</td><td class="mono">U+0306</td><td class="mono">uni0306</td><td class="mono">0</td><td class="mono">510…884 × 970…1148</td><td class="mono">374×178</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̇ u+0307 uni0307 combining"><td class="glyph-cell">◌̇</td><td class="mono">U+0307</td><td class="mono">uni0307</td><td class="mono">0</td><td class="mono">561…726 × 648…813</td><td class="mono">165×165</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̈ u+0308 uni0308 combining"><td class="glyph-cell">◌̈</td><td class="mono">U+0308</td><td class="mono">uni0308</td><td class="mono">0</td><td class="mono">449…949 × 978…1143</td><td class="mono">500×165</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̊ u+030a uni030a combining"><td class="glyph-cell">◌̊</td><td class="mono">U+030A</td><td class="mono">uni030A</td><td class="mono">0</td><td class="mono">528…871 × 1009…1349</td><td class="mono">343×340</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̋ u+030b uni030b combining"><td class="glyph-cell">◌̋</td><td class="mono">U+030B</td><td class="mono">uni030B</td><td class="mono">0</td><td class="mono">300…940 × 906…1253</td><td class="mono">640×347</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̌ u+030c uni030c combining"><td class="glyph-cell">◌̌</td><td class="mono">U+030C</td><td class="mono">uni030C</td><td class="mono">0</td><td class="mono">477…922 × 979…1320</td><td class="mono">445×341</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̏ u+030f uni030f combining"><td class="glyph-cell">◌̏</td><td class="mono">U+030F</td><td class="mono">uni030F</td><td class="mono">0</td><td class="mono">300…940 × 906…1253</td><td class="mono">640×347</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̑ u+0311 uni0311 combining"><td class="glyph-cell">◌̑</td><td class="mono">U+0311</td><td class="mono">uni0311</td><td class="mono">0</td><td class="mono">433…807 × 970…1148</td><td class="mono">374×178</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̦ u+0326 uni0326 combining"><td class="glyph-cell">◌̦</td><td class="mono">U+0326</td><td class="mono">uni0326</td><td class="mono">0</td><td class="mono">538…761 × -210…168</td><td class="mono">223×378</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̧ u+0327 uni0327 combining"><td class="glyph-cell">◌̧</td><td class="mono">U+0327</td><td class="mono">uni0327</td><td class="mono">0</td><td class="mono">28…180 × -401…0</td><td class="mono">152×401</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="COMBINING" data-search="̨ u+0328 uni0328 combining"><td class="glyph-cell">◌̨</td><td class="mono">U+0328</td><td class="mono">uni0328</td><td class="mono">0</td><td class="mono">503…737 × -407…20</td><td class="mono">234×427</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ѐ u+0400 uni0400 mk_sr"><td class="glyph-cell">Ѐ</td><td class="mono">U+0400</td><td class="mono">uni0400</td><td class="mono">1240</td><td class="mono">104…1137 × 0…1593</td><td class="mono">1033×1593</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ё u+0401 afii10023 ru_caps"><td class="glyph-cell">Ё</td><td class="mono">U+0401</td><td class="mono">afii10023</td><td class="mono">1240</td><td class="mono">104…1137 × 0…1474</td><td class="mono">1033×1474</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ђ u+0402 uni0402 mk_sr"><td class="glyph-cell">Ђ</td><td class="mono">U+0402</td><td class="mono">uni0402</td><td class="mono">1240</td><td class="mono">181…1060 × -300…1171</td><td class="mono">879×1471</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ѓ u+0403 uni0403 mk_sr"><td class="glyph-cell">Ѓ</td><td class="mono">U+0403</td><td class="mono">uni0403</td><td class="mono">1240</td><td class="mono">163…1078 × 0…1618</td><td class="mono">915×1618</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -23…+24; Δy +0…+447; Δadv +0</span></td></tr>
+<tr data-block="UA" data-search="є u+0404 uni0404 ua"><td class="glyph-cell">Є</td><td class="mono">U+0404</td><td class="mono">uni0404</td><td class="mono">1240</td><td class="mono">113…1127 × -17…1187</td><td class="mono">1014×1204</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ѕ u+0405 afii10102 mk_sr"><td class="glyph-cell">Ѕ</td><td class="mono">U+0405</td><td class="mono">afii10102</td><td class="mono">1240</td><td class="mono">226…1015 × -17…1187</td><td class="mono">789×1204</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="UA" data-search="і u+0406 afii10103 ua"><td class="glyph-cell">І</td><td class="mono">U+0406</td><td class="mono">afii10103</td><td class="mono">1240</td><td class="mono">227…1013 × 0…1171</td><td class="mono">786×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="UA" data-search="ї u+0407 afii10105 ua"><td class="glyph-cell">Ї</td><td class="mono">U+0407</td><td class="mono">afii10105</td><td class="mono">1240</td><td class="mono">227…1013 × 0…1474</td><td class="mono">786×1474</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ј u+0408 uni0408 mk_sr"><td class="glyph-cell">Ј</td><td class="mono">U+0408</td><td class="mono">uni0408</td><td class="mono">1240</td><td class="mono">152…1089 × -13…1171</td><td class="mono">937×1184</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="љ u+0409 uni0409 mk_sr"><td class="glyph-cell">Љ</td><td class="mono">U+0409</td><td class="mono">uni0409</td><td class="mono">1240</td><td class="mono">59…1182 × -5…1171</td><td class="mono">1123×1176</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +42…+0; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="њ u+040a uni040a mk_sr"><td class="glyph-cell">Њ</td><td class="mono">U+040A</td><td class="mono">uni040A</td><td class="mono">1240</td><td class="mono">65…1176 × 0…1171</td><td class="mono">1111×1171</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -24…+24; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="ћ u+040b uni040b mk_sr"><td class="glyph-cell">Ћ</td><td class="mono">U+040B</td><td class="mono">uni040B</td><td class="mono">1240</td><td class="mono">235…1006 × 0…1171</td><td class="mono">771×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +1…+0; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="ќ u+040c uni040c mk_sr"><td class="glyph-cell">Ќ</td><td class="mono">U+040C</td><td class="mono">uni040C</td><td class="mono">1240</td><td class="mono">15…1225 × 0…1618</td><td class="mono">1210×1618</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+447; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="ѝ u+040d uni040d mk_sr"><td class="glyph-cell">Ѝ</td><td class="mono">U+040D</td><td class="mono">uni040D</td><td class="mono">1240</td><td class="mono">69…1172 × -16…1593</td><td class="mono">1103×1609</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="BE" data-search="ў u+040e uni040e be"><td class="glyph-cell">Ў</td><td class="mono">U+040E</td><td class="mono">uni040E</td><td class="mono">1240</td><td class="mono">10…1230 × -371…1465</td><td class="mono">1220×1836</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +15…-63; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="џ u+040f uni040f mk_sr"><td class="glyph-cell">Џ</td><td class="mono">U+040F</td><td class="mono">uni040F</td><td class="mono">1240</td><td class="mono">85…1156 × -300…1171</td><td class="mono">1071×1471</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -24…+24; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="а u+0410 afii10017 ru_caps"><td class="glyph-cell">А</td><td class="mono">U+0410</td><td class="mono">afii10017</td><td class="mono">1240</td><td class="mono">33…1207 × 0…1171</td><td class="mono">1174×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="б u+0411 afii10018 ru_caps"><td class="glyph-cell">Б</td><td class="mono">U+0411</td><td class="mono">afii10018</td><td class="mono">1240</td><td class="mono">146…1095 × 0…1171</td><td class="mono">949×1171</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -13…+14; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="в u+0412 afii10019 ru_caps"><td class="glyph-cell">В</td><td class="mono">U+0412</td><td class="mono">afii10019</td><td class="mono">1240</td><td class="mono">162…1078 × 0…1171</td><td class="mono">916×1171</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="г u+0413 afii10020 ru_caps"><td class="glyph-cell">Г</td><td class="mono">U+0413</td><td class="mono">afii10020</td><td class="mono">1240</td><td class="mono">163…1078 × 0…1171</td><td class="mono">915×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -23…+24; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="д u+0414 afii10021 ru_caps"><td class="glyph-cell">Д</td><td class="mono">U+0414</td><td class="mono">afii10021</td><td class="mono">1240</td><td class="mono">151…1089 × 0…1171</td><td class="mono">938×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +1…-1; Δy +0…-28; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="е u+0415 afii10022 ru_caps"><td class="glyph-cell">Е</td><td class="mono">U+0415</td><td class="mono">afii10022</td><td class="mono">1240</td><td class="mono">104…1137 × 0…1171</td><td class="mono">1033×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ж u+0416 afii10024 ru_caps"><td class="glyph-cell">Ж</td><td class="mono">U+0416</td><td class="mono">afii10024</td><td class="mono">1240</td><td class="mono">50…1190 × 0…1171</td><td class="mono">1140×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="з u+0417 afii10025 ru_caps"><td class="glyph-cell">З</td><td class="mono">U+0417</td><td class="mono">afii10025</td><td class="mono">1240</td><td class="mono">143…1093 × -17…1187</td><td class="mono">950×1204</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +69…-19; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="и u+0418 afii10026 ru_caps"><td class="glyph-cell">И</td><td class="mono">U+0418</td><td class="mono">afii10026</td><td class="mono">1240</td><td class="mono">69…1172 × -16…1171</td><td class="mono">1103×1187</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="й u+0419 afii10027 ru_caps"><td class="glyph-cell">Й</td><td class="mono">U+0419</td><td class="mono">afii10027</td><td class="mono">1240</td><td class="mono">69…1172 × -16…1465</td><td class="mono">1103×1481</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+22; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="к u+041a afii10028 ru_caps"><td class="glyph-cell">К</td><td class="mono">U+041A</td><td class="mono">afii10028</td><td class="mono">1240</td><td class="mono">15…1225 × 0…1171</td><td class="mono">1210×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="л u+041b afii10029 ru_caps"><td class="glyph-cell">Л</td><td class="mono">U+041B</td><td class="mono">afii10029</td><td class="mono">1240</td><td class="mono">46…1194 × 0…1171</td><td class="mono">1148×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +7…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="м u+041c afii10030 ru_caps"><td class="glyph-cell">М</td><td class="mono">U+041C</td><td class="mono">afii10030</td><td class="mono">1240</td><td class="mono">20…1220 × 0…1171</td><td class="mono">1200×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="н u+041d afii10031 ru_caps"><td class="glyph-cell">Н</td><td class="mono">U+041D</td><td class="mono">afii10031</td><td class="mono">1240</td><td class="mono">93…1147 × 0…1171</td><td class="mono">1054×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="о u+041e afii10032 ru_caps"><td class="glyph-cell">О</td><td class="mono">U+041E</td><td class="mono">afii10032</td><td class="mono">1240</td><td class="mono">108…1132 × -17…1187</td><td class="mono">1024×1204</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="п u+041f afii10033 ru_caps"><td class="glyph-cell">П</td><td class="mono">U+041F</td><td class="mono">afii10033</td><td class="mono">1240</td><td class="mono">104…1136 × 0…1171</td><td class="mono">1032×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -28…+28; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="р u+0420 afii10034 ru_caps"><td class="glyph-cell">Р</td><td class="mono">U+0420</td><td class="mono">afii10034</td><td class="mono">1240</td><td class="mono">148…1093 × 0…1171</td><td class="mono">945×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="с u+0421 afii10035 ru_caps"><td class="glyph-cell">С</td><td class="mono">U+0421</td><td class="mono">afii10035</td><td class="mono">1240</td><td class="mono">113…1127 × -17…1187</td><td class="mono">1014×1204</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="т u+0422 afii10036 ru_caps"><td class="glyph-cell">Т</td><td class="mono">U+0422</td><td class="mono">afii10036</td><td class="mono">1240</td><td class="mono">121…1119 × 0…1171</td><td class="mono">998×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="у u+0423 afii10037 ru_caps"><td class="glyph-cell">У</td><td class="mono">U+0423</td><td class="mono">afii10037</td><td class="mono">1240</td><td class="mono">10…1230 × -371…1171</td><td class="mono">1220×1542</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +15…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ф u+0424 afii10038 ru_caps"><td class="glyph-cell">Ф</td><td class="mono">U+0424</td><td class="mono">afii10038</td><td class="mono">1240</td><td class="mono">108…1132 × -120…1300</td><td class="mono">1024×1420</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="х u+0425 afii10039 ru_caps"><td class="glyph-cell">Х</td><td class="mono">U+0425</td><td class="mono">afii10039</td><td class="mono">1240</td><td class="mono">102…1139 × 0…1171</td><td class="mono">1037×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ц u+0426 afii10040 ru_caps"><td class="glyph-cell">Ц</td><td class="mono">U+0426</td><td class="mono">afii10040</td><td class="mono">1240</td><td class="mono">104…1136 × -350…1171</td><td class="mono">1032×1521</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +5…-5; Δy -50…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ч u+0427 afii10041 ru_caps"><td class="glyph-cell">Ч</td><td class="mono">U+0427</td><td class="mono">afii10041</td><td class="mono">1240</td><td class="mono">95…1146 × 0…1171</td><td class="mono">1051×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -48…+48; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ш u+0428 afii10042 ru_caps"><td class="glyph-cell">Ш</td><td class="mono">U+0428</td><td class="mono">afii10042</td><td class="mono">1240</td><td class="mono">153…1088 × 0…1171</td><td class="mono">935×1171</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="щ u+0429 afii10043 ru_caps"><td class="glyph-cell">Щ</td><td class="mono">U+0429</td><td class="mono">afii10043</td><td class="mono">1240</td><td class="mono">120…1120 × -350…1171</td><td class="mono">1000×1521</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +15…-15; Δy -50…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ъ u+042a afii10044 ru_caps"><td class="glyph-cell">Ъ</td><td class="mono">U+042A</td><td class="mono">afii10044</td><td class="mono">1240</td><td class="mono">178…1063 × 0…1171</td><td class="mono">885×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ы u+042b afii10045 ru_caps"><td class="glyph-cell">Ы</td><td class="mono">U+042B</td><td class="mono">afii10045</td><td class="mono">1240</td><td class="mono">52…1188 × 0…1171</td><td class="mono">1136×1171</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -118…+118; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ь u+042c afii10046 ru_caps"><td class="glyph-cell">Ь</td><td class="mono">U+042C</td><td class="mono">afii10046</td><td class="mono">1240</td><td class="mono">198…1043 × 0…1171</td><td class="mono">845×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -23…+24; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="э u+042d afii10047 ru_caps"><td class="glyph-cell">Э</td><td class="mono">U+042D</td><td class="mono">afii10047</td><td class="mono">1240</td><td class="mono">113…1127 × -17…1187</td><td class="mono">1014×1204</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_CAPS" data-search="ю u+042e afii10048 ru_caps"><td class="glyph-cell">Ю</td><td class="mono">U+042E</td><td class="mono">afii10048</td><td class="mono">1240</td><td class="mono">35…1205 × -17…1187</td><td class="mono">1170×1204</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -9…+9; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_CAPS" data-search="я u+042f afii10049 ru_caps"><td class="glyph-cell">Я</td><td class="mono">U+042F</td><td class="mono">afii10049</td><td class="mono">1240</td><td class="mono">103…1138 × 0…1171</td><td class="mono">1035×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="а u+0430 afii10065 ru_lows"><td class="glyph-cell">а</td><td class="mono">U+0430</td><td class="mono">afii10065</td><td class="mono">1240</td><td class="mono">185…1056 × -16…813</td><td class="mono">871×829</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="б u+0431 afii10066 ru_lows"><td class="glyph-cell">б</td><td class="mono">U+0431</td><td class="mono">afii10066</td><td class="mono">1240</td><td class="mono">221…1019 × 0…1140</td><td class="mono">798×1140</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -14…+13; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="в u+0432 afii10067 ru_lows"><td class="glyph-cell">в</td><td class="mono">U+0432</td><td class="mono">afii10067</td><td class="mono">1240</td><td class="mono">180…1060 × 0…835</td><td class="mono">880×835</td><td class="mono">4</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -24…+23; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="г u+0433 afii10068 ru_lows"><td class="glyph-cell">г</td><td class="mono">U+0433</td><td class="mono">afii10068</td><td class="mono">1240</td><td class="mono">209…1032 × 0…813</td><td class="mono">823×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="д u+0434 afii10069 ru_lows"><td class="glyph-cell">д</td><td class="mono">U+0434</td><td class="mono">afii10069</td><td class="mono">1240</td><td class="mono">165…1075 × -140…813</td><td class="mono">910×953</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="е u+0435 afii10070 ru_lows"><td class="glyph-cell">е</td><td class="mono">U+0435</td><td class="mono">afii10070</td><td class="mono">1240</td><td class="mono">219…1022 × -17…813</td><td class="mono">803×830</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ж u+0436 afii10072 ru_lows"><td class="glyph-cell">ж</td><td class="mono">U+0436</td><td class="mono">afii10072</td><td class="mono">1240</td><td class="mono">148…1093 × 0…813</td><td class="mono">945×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="з u+0437 afii10073 ru_lows"><td class="glyph-cell">з</td><td class="mono">U+0437</td><td class="mono">afii10073</td><td class="mono">1240</td><td class="mono">289…950 × -17…813</td><td class="mono">661×830</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +47…-26; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="и u+0438 afii10074 ru_lows"><td class="glyph-cell">и</td><td class="mono">U+0438</td><td class="mono">afii10074</td><td class="mono">1240</td><td class="mono">127…1113 × 0…813</td><td class="mono">986×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="й u+0439 afii10075 ru_lows"><td class="glyph-cell">й</td><td class="mono">U+0439</td><td class="mono">afii10075</td><td class="mono">1240</td><td class="mono">127…1113 × 0…1107</td><td class="mono">986×1107</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+38; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="к u+043a afii10076 ru_lows"><td class="glyph-cell">к</td><td class="mono">U+043A</td><td class="mono">afii10076</td><td class="mono">1240</td><td class="mono">133…1107 × 0…813</td><td class="mono">974×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +2…-2; Δy +0…-369; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="л u+043b afii10077 ru_lows"><td class="glyph-cell">л</td><td class="mono">U+043B</td><td class="mono">afii10077</td><td class="mono">1240</td><td class="mono">91…1149 × 0…814</td><td class="mono">1058×814</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -1…+0; Δy +9…-6; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="м u+043c afii10078 ru_lows"><td class="glyph-cell">м</td><td class="mono">U+043C</td><td class="mono">afii10078</td><td class="mono">1240</td><td class="mono">79…1161 × 0…821</td><td class="mono">1082×821</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="н u+043d afii10079 ru_lows"><td class="glyph-cell">н</td><td class="mono">U+043D</td><td class="mono">afii10079</td><td class="mono">1240</td><td class="mono">127…1113 × 0…813</td><td class="mono">986×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="о u+043e afii10080 ru_lows"><td class="glyph-cell">о</td><td class="mono">U+043E</td><td class="mono">afii10080</td><td class="mono">1240</td><td class="mono">196…1044 × -17…813</td><td class="mono">848×830</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="п u+043f afii10081 ru_lows"><td class="glyph-cell">п</td><td class="mono">U+043F</td><td class="mono">afii10081</td><td class="mono">1240</td><td class="mono">127…1113 × 0…813</td><td class="mono">986×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="р u+0440 afii10082 ru_lows"><td class="glyph-cell">р</td><td class="mono">U+0440</td><td class="mono">afii10082</td><td class="mono">1240</td><td class="mono">158…1083 × -370…813</td><td class="mono">925×1183</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="с u+0441 afii10083 ru_lows"><td class="glyph-cell">с</td><td class="mono">U+0441</td><td class="mono">afii10083</td><td class="mono">1240</td><td class="mono">222…1018 × -17…813</td><td class="mono">796×830</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="т u+0442 afii10084 ru_lows"><td class="glyph-cell">т</td><td class="mono">U+0442</td><td class="mono">afii10084</td><td class="mono">1240</td><td class="mono">230…1010 × 0…813</td><td class="mono">780×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="у u+0443 afii10085 ru_lows"><td class="glyph-cell">у</td><td class="mono">U+0443</td><td class="mono">afii10085</td><td class="mono">1240</td><td class="mono">125…1115 × -371…813</td><td class="mono">990×1184</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy -1…-36; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ф u+0444 afii10086 ru_lows"><td class="glyph-cell">ф</td><td class="mono">U+0444</td><td class="mono">afii10086</td><td class="mono">1240</td><td class="mono">196…1044 × -260…960</td><td class="mono">848×1220</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="х u+0445 afii10087 ru_lows"><td class="glyph-cell">х</td><td class="mono">U+0445</td><td class="mono">afii10087</td><td class="mono">1240</td><td class="mono">161…1080 × 0…774</td><td class="mono">919×774</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ц u+0446 afii10088 ru_lows"><td class="glyph-cell">ц</td><td class="mono">U+0446</td><td class="mono">afii10088</td><td class="mono">1240</td><td class="mono">127…1113 × -330…813</td><td class="mono">986×1143</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +38…-39; Δy -50…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ч u+0447 afii10089 ru_lows"><td class="glyph-cell">ч</td><td class="mono">U+0447</td><td class="mono">afii10089</td><td class="mono">1240</td><td class="mono">77…1164 × 0…813</td><td class="mono">1087×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -23…+24; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ш u+0448 afii10090 ru_lows"><td class="glyph-cell">ш</td><td class="mono">U+0448</td><td class="mono">afii10090</td><td class="mono">1240</td><td class="mono">165…1075 × 0…813</td><td class="mono">910×813</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="щ u+0449 afii10091 ru_lows"><td class="glyph-cell">щ</td><td class="mono">U+0449</td><td class="mono">afii10091</td><td class="mono">1240</td><td class="mono">152…1089 × -330…813</td><td class="mono">937×1143</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +63…-62; Δy -50…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ъ u+044a afii10092 ru_lows"><td class="glyph-cell">ъ</td><td class="mono">U+044A</td><td class="mono">afii10092</td><td class="mono">1240</td><td class="mono">178…1063 × 0…817</td><td class="mono">885×817</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ы u+044b afii10093 ru_lows"><td class="glyph-cell">ы</td><td class="mono">U+044B</td><td class="mono">afii10093</td><td class="mono">1240</td><td class="mono">47…1193 × 0…813</td><td class="mono">1146×813</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -94…+94; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ь u+044c afii10094 ru_lows"><td class="glyph-cell">ь</td><td class="mono">U+044C</td><td class="mono">afii10094</td><td class="mono">1240</td><td class="mono">188…1053 × 0…813</td><td class="mono">865×813</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +1…+0; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="э u+044d afii10095 ru_lows"><td class="glyph-cell">э</td><td class="mono">U+044D</td><td class="mono">afii10095</td><td class="mono">1240</td><td class="mono">222…1018 × -17…813</td><td class="mono">796×830</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ю u+044e afii10096 ru_lows"><td class="glyph-cell">ю</td><td class="mono">U+044E</td><td class="mono">afii10096</td><td class="mono">1240</td><td class="mono">105…1135 × -15…815</td><td class="mono">1030×830</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -24…+23; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="я u+044f afii10097 ru_lows"><td class="glyph-cell">я</td><td class="mono">U+044F</td><td class="mono">afii10097</td><td class="mono">1240</td><td class="mono">127…1113 × -1…813</td><td class="mono">986×814</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -25…+24; Δy +31…+0; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="ѐ u+0450 uni0450 mk_sr"><td class="glyph-cell">ѐ</td><td class="mono">U+0450</td><td class="mono">uni0450</td><td class="mono">1240</td><td class="mono">219…1022 × -17…1235</td><td class="mono">803×1252</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="RU_LOWS" data-search="ё u+0451 afii10071 ru_lows"><td class="glyph-cell">ё</td><td class="mono">U+0451</td><td class="mono">afii10071</td><td class="mono">1240</td><td class="mono">219…1022 × -17…1100</td><td class="mono">803×1117</td><td class="mono">4</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ђ u+0452 uni0452 mk_sr"><td class="glyph-cell">ђ</td><td class="mono">U+0452</td><td class="mono">uni0452</td><td class="mono">1240</td><td class="mono">181…1060 × -300…1120</td><td class="mono">879×1420</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ѓ u+0453 uni0453 mk_sr"><td class="glyph-cell">ѓ</td><td class="mono">U+0453</td><td class="mono">uni0453</td><td class="mono">1240</td><td class="mono">209…1032 × 0…1260</td><td class="mono">823×1260</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+447; Δadv +0</span></td></tr>
+<tr data-block="UA" data-search="є u+0454 uni0454 ua"><td class="glyph-cell">є</td><td class="mono">U+0454</td><td class="mono">uni0454</td><td class="mono">1240</td><td class="mono">222…1018 × -17…813</td><td class="mono">796×830</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ѕ u+0455 afii10101 mk_sr"><td class="glyph-cell">ѕ</td><td class="mono">U+0455</td><td class="mono">afii10101</td><td class="mono">1240</td><td class="mono">264…976 × -17…813</td><td class="mono">712×830</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="UA" data-search="і u+0456 afii10104 ua"><td class="glyph-cell">і</td><td class="mono">U+0456</td><td class="mono">afii10104</td><td class="mono">1240</td><td class="mono">179…1062 × 0…1171</td><td class="mono">883×1171</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="UA" data-search="ї u+0457 afii10106 ua"><td class="glyph-cell">ї</td><td class="mono">U+0457</td><td class="mono">afii10106</td><td class="mono">1240</td><td class="mono">179…1062 × 0…1100</td><td class="mono">883×1100</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="ј u+0458 uni0458 mk_sr"><td class="glyph-cell">ј</td><td class="mono">U+0458</td><td class="mono">uni0458</td><td class="mono">1240</td><td class="mono">322…918 × -310…1171</td><td class="mono">596×1481</td><td class="mono">2</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="MK_SR" data-search="љ u+0459 uni0459 mk_sr"><td class="glyph-cell">љ</td><td class="mono">U+0459</td><td class="mono">uni0459</td><td class="mono">1240</td><td class="mono">144…1097 × -5…814</td><td class="mono">953×819</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +42…-6; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="њ u+045a uni045a mk_sr"><td class="glyph-cell">њ</td><td class="mono">U+045A</td><td class="mono">uni045A</td><td class="mono">1240</td><td class="mono">95…1146 × 0…813</td><td class="mono">1051×813</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -34…+34; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="ћ u+045b uni045b mk_sr"><td class="glyph-cell">ћ</td><td class="mono">U+045B</td><td class="mono">uni045B</td><td class="mono">1240</td><td class="mono">235…1006 × 0…1120</td><td class="mono">771×1120</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +1…+0; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="ќ u+045c uni045c mk_sr"><td class="glyph-cell">ќ</td><td class="mono">U+045C</td><td class="mono">uni045C</td><td class="mono">1240</td><td class="mono">133…1107 × 0…1260</td><td class="mono">974×1260</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +2…-2; Δy +0…+78; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="ѝ u+045d uni045d mk_sr"><td class="glyph-cell">ѝ</td><td class="mono">U+045D</td><td class="mono">uni045D</td><td class="mono">1240</td><td class="mono">127…1113 × 0…1235</td><td class="mono">986×1235</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="BE" data-search="ў u+045e uni045e be"><td class="glyph-cell">ў</td><td class="mono">U+045E</td><td class="mono">uni045E</td><td class="mono">1240</td><td class="mono">125…1115 × -371…1107</td><td class="mono">990×1478</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy -1…-47; Δadv +0</span></td></tr>
+<tr data-block="MK_SR" data-search="џ u+045f uni045f mk_sr"><td class="glyph-cell">џ</td><td class="mono">U+045F</td><td class="mono">uni045F</td><td class="mono">1240</td><td class="mono">120…1121 × -280…813</td><td class="mono">1001×1093</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -29…+29; Δy +0…+82; Δadv +0</span></td></tr>
+<tr data-block="UA" data-search="ґ u+0490 uni0490 ua"><td class="glyph-cell">Ґ</td><td class="mono">U+0490</td><td class="mono">uni0490</td><td class="mono">1240</td><td class="mono">155…1085 × 0…1361</td><td class="mono">930×1361</td><td class="mono">1</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -24…+24; Δy +0…+0; Δadv +0</span></td></tr>
+<tr data-block="UA" data-search="ґ u+0491 uni0491 ua"><td class="glyph-cell">ґ</td><td class="mono">U+0491</td><td class="mono">uni0491</td><td class="mono">1240</td><td class="mono">179…1062 × 0…983</td><td class="mono">883×983</td><td class="mono">1</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="EXT" data-search="ҷ u+04b6 uni04b6 ext"><td class="glyph-cell">Ҷ</td><td class="mono">U+04B6</td><td class="mono">uni04B6</td><td class="mono">1240</td><td class="mono">50…1190 × 0…1469</td><td class="mono">1140×1469</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ҷ u+04b7 uni04b7 ext"><td class="glyph-cell">ҷ</td><td class="mono">U+04B7</td><td class="mono">uni04B7</td><td class="mono">1240</td><td class="mono">148…1093 × 0…1111</td><td class="mono">945×1111</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӂ u+04c1 uni04c1 ext"><td class="glyph-cell">Ӂ</td><td class="mono">U+04C1</td><td class="mono">uni04C1</td><td class="mono">1240</td><td class="mono">50…1190 × 0…1469</td><td class="mono">1140×1469</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӂ u+04c2 uni04c2 ext"><td class="glyph-cell">ӂ</td><td class="mono">U+04C2</td><td class="mono">uni04C2</td><td class="mono">1240</td><td class="mono">148…1093 × 0…1111</td><td class="mono">945×1111</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӑ u+04d0 uni04d0 ext"><td class="glyph-cell">Ӑ</td><td class="mono">U+04D0</td><td class="mono">uni04D0</td><td class="mono">1240</td><td class="mono">33…1207 × 0…1469</td><td class="mono">1174×1469</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӑ u+04d1 uni04d1 ext"><td class="glyph-cell">ӑ</td><td class="mono">U+04D1</td><td class="mono">uni04D1</td><td class="mono">1240</td><td class="mono">185…1056 × -16…1111</td><td class="mono">871×1127</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӓ u+04d2 uni04d2 ext"><td class="glyph-cell">Ӓ</td><td class="mono">U+04D2</td><td class="mono">uni04D2</td><td class="mono">1240</td><td class="mono">33…1207 × 0…1456</td><td class="mono">1174×1456</td><td class="mono">4</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӓ u+04d3 uni04d3 ext"><td class="glyph-cell">ӓ</td><td class="mono">U+04D3</td><td class="mono">uni04D3</td><td class="mono">1240</td><td class="mono">185…1056 × -16…1098</td><td class="mono">871×1114</td><td class="mono">4</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӗ u+04d6 uni04d6 ext"><td class="glyph-cell">Ӗ</td><td class="mono">U+04D6</td><td class="mono">uni04D6</td><td class="mono">1240</td><td class="mono">104…1137 × 0…1469</td><td class="mono">1033×1469</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӗ u+04d7 uni04d7 ext"><td class="glyph-cell">ӗ</td><td class="mono">U+04D7</td><td class="mono">uni04D7</td><td class="mono">1240</td><td class="mono">219…1022 × -17…1111</td><td class="mono">803×1128</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӝ u+04dc uni04dc ext"><td class="glyph-cell">Ӝ</td><td class="mono">U+04DC</td><td class="mono">uni04DC</td><td class="mono">1240</td><td class="mono">50…1190 × 0…1456</td><td class="mono">1140×1456</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӝ u+04dd uni04dd ext"><td class="glyph-cell">ӝ</td><td class="mono">U+04DD</td><td class="mono">uni04DD</td><td class="mono">1240</td><td class="mono">148…1093 × 0…1098</td><td class="mono">945×1098</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӟ u+04de uni04de ext"><td class="glyph-cell">Ӟ</td><td class="mono">U+04DE</td><td class="mono">uni04DE</td><td class="mono">1240</td><td class="mono">143…1093 × -17…1473</td><td class="mono">950×1490</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +69…+67; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӟ u+04df uni04df ext"><td class="glyph-cell">ӟ</td><td class="mono">U+04DF</td><td class="mono">uni04DF</td><td class="mono">1240</td><td class="mono">289…950 × -17…1099</td><td class="mono">661×1116</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +47…+60; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӣ u+04e2 uni04e2 ext"><td class="glyph-cell">Ӣ</td><td class="mono">U+04E2</td><td class="mono">uni04E2</td><td class="mono">1240</td><td class="mono">69…1172 × -16…1377</td><td class="mono">1103×1393</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӣ u+04e3 uni04e3 ext"><td class="glyph-cell">ӣ</td><td class="mono">U+04E3</td><td class="mono">uni04E3</td><td class="mono">1240</td><td class="mono">127…1113 × 0…1019</td><td class="mono">986×1019</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӥ u+04e4 uni04e4 ext"><td class="glyph-cell">Ӥ</td><td class="mono">U+04E4</td><td class="mono">uni04E4</td><td class="mono">1240</td><td class="mono">69…1172 × -16…1456</td><td class="mono">1103×1472</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӥ u+04e5 uni04e5 ext"><td class="glyph-cell">ӥ</td><td class="mono">U+04E5</td><td class="mono">uni04E5</td><td class="mono">1240</td><td class="mono">127…1113 × 0…1098</td><td class="mono">986×1098</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӧ u+04e6 uni04e6 ext"><td class="glyph-cell">Ӧ</td><td class="mono">U+04E6</td><td class="mono">uni04E6</td><td class="mono">1240</td><td class="mono">108…1132 × -17…1472</td><td class="mono">1024×1489</td><td class="mono">4</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӧ u+04e7 uni04e7 ext"><td class="glyph-cell">ӧ</td><td class="mono">U+04E7</td><td class="mono">uni04E7</td><td class="mono">1240</td><td class="mono">196…1044 × -17…1098</td><td class="mono">848×1115</td><td class="mono">4</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӯ u+04ee uni04ee ext"><td class="glyph-cell">Ӯ</td><td class="mono">U+04EE</td><td class="mono">uni04EE</td><td class="mono">1240</td><td class="mono">10…1230 × -371…1377</td><td class="mono">1220×1748</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +15…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӯ u+04ef uni04ef ext"><td class="glyph-cell">ӯ</td><td class="mono">U+04EF</td><td class="mono">uni04EF</td><td class="mono">1240</td><td class="mono">125…1115 × -371…1019</td><td class="mono">990×1390</td><td class="mono">2</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy -1…+50; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӱ u+04f0 uni04f0 ext"><td class="glyph-cell">Ӱ</td><td class="mono">U+04F0</td><td class="mono">uni04F0</td><td class="mono">1240</td><td class="mono">10…1230 × -371…1456</td><td class="mono">1220×1827</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +15…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӱ u+04f1 uni04f1 ext"><td class="glyph-cell">ӱ</td><td class="mono">U+04F1</td><td class="mono">uni04F1</td><td class="mono">1240</td><td class="mono">125…1115 × -371…1098</td><td class="mono">990×1469</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy -1…+50; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӳ u+04f2 uni04f2 ext"><td class="glyph-cell">Ӳ</td><td class="mono">U+04F2</td><td class="mono">uni04F2</td><td class="mono">1240</td><td class="mono">10…1230 × -371…1638</td><td class="mono">1220×2009</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy +15…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӳ u+04f3 uni04f3 ext"><td class="glyph-cell">ӳ</td><td class="mono">U+04F3</td><td class="mono">uni04F3</td><td class="mono">1240</td><td class="mono">125…1115 × -371…1280</td><td class="mono">990×1651</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx +0…+0; Δy -1…+50; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӵ u+04f4 uni04f4 ext"><td class="glyph-cell">Ӵ</td><td class="mono">U+04F4</td><td class="mono">uni04F4</td><td class="mono">1240</td><td class="mono">95…1146 × 0…1456</td><td class="mono">1051×1456</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -48…+48; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӵ u+04f5 uni04f5 ext"><td class="glyph-cell">ӵ</td><td class="mono">U+04F5</td><td class="mono">uni04F5</td><td class="mono">1240</td><td class="mono">77…1164 × 0…1098</td><td class="mono">1087×1098</td><td class="mono">3</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -23…+24; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӹ u+04f8 uni04f8 ext"><td class="glyph-cell">Ӹ</td><td class="mono">U+04F8</td><td class="mono">uni04F8</td><td class="mono">1240</td><td class="mono">52…1188 × 0…1456</td><td class="mono">1136×1456</td><td class="mono">5</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -118…+118; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="EXT" data-search="ӹ u+04f9 uni04f9 ext"><td class="glyph-cell">ӹ</td><td class="mono">U+04F9</td><td class="mono">uni04F9</td><td class="mono">1240</td><td class="mono">47…1193 × 0…1098</td><td class="mono">1146×1098</td><td class="mono">5</td><td class="mono">yes</td><td><span class="delta" title="Δ bbox и advance относительно V5">changed</span><br><span class="small">Δx -94…+94; Δy +0…+86; Δadv +0</span></td></tr>
+<tr data-block="PUNCT" data-search="₽ u+20bd uni20bd punct"><td class="glyph-cell">₽</td><td class="mono">U+20BD</td><td class="mono">uni20BD</td><td class="mono">1240</td><td class="mono">148…1093 × 0…1171</td><td class="mono">945×1171</td><td class="mono">3</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+<tr data-block="PUNCT" data-search="№ u+2116 uni2116 punct"><td class="glyph-cell">№</td><td class="mono">U+2116</td><td class="mono">uni2116</td><td class="mono">1240</td><td class="mono">85…1155 × -16…1171</td><td class="mono">1070×1187</td><td class="mono">4</td><td class="mono">yes</td><td><span class="unchanged">—</span></td></tr>
+</tbody></table></div>
+<p class="lede" style="margin-top:10px">BBox — <code>xmin…xmax × ymin…ymax</code> в единицах шрифта (UPM 2048, y вверх). Δ к V5 считается по bbox и advance; точные значения — в <code>V6-GLYPH-METRICS.csv</code>. Метрики в таблице всегда относятся к установленному V6; переключатель режима меняет только рисунок. Для комбинируемых знаков показан пунктирный кружок.</p>
+</section>
+
+<section class="section" id="important">
+<h2>Особо важные глифы</h2>
+<p class="lede">20 пар крупным планом. Для каждой — bbox, ширина/высота, advance, число контуров и краткое описание конструкции. Метрики — из V6; переключатель режима меняет только рисунок. Латинский ориентир не утверждает равенство рисунка; это соседняя форма для сравнения. Кегль карточек фиксирован (120 px), чтобы пропорции не зависели от ползунка.</p>
+<div class="glyph-grid">
+<article class="glyph-card" id="g-0411">
+<div class="pair">Б / б <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Б б</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">B b</span></div>
+<dl class="metrics">
+<dt>BBox Б</dt><dd>146…1095 × 0…1171</dd>
+<dt>BBox б</dt><dd>221…1019 × 0…1140</dd>
+<dt>Ш×В</dt><dd>949×1171 / 798×1140</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>3 / 2</dd>
+</dl>
+<p class="note">Капитальная: стем 265, верхнее плечо 265–1030, нижняя чаша 295×590, засечка 396. Строчная: выносной 1140, чаша 760, перекладина 1054–1140. Чаша посажена как у донорной B/b.</p>
+</article>
+<article class="glyph-card" id="g-0412">
+<div class="pair">В / в <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">В в</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">B b</span></div>
+<dl class="metrics">
+<dt>BBox В</dt><dd>162…1078 × 0…1171</dd>
+<dt>BBox в</dt><dd>180…1060 × 0…835</dd>
+<dt>Ш×В</dt><dd>916×1171 / 880×835</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>3 / 4</dd>
+</dl>
+<p class="note">Капитальная — донорная B. Строчная: два счётчика, верхняя чаша 470, нижняя 430; верх 835 — на 22 выше x-height 813.</p>
+</article>
+<article class="glyph-card" id="g-0413">
+<div class="pair">Г / г <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Г г</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">r</span></div>
+<dl class="metrics">
+<dt>BBox Г</dt><dd>163…1078 × 0…1171</dd>
+<dt>BBox г</dt><dd>209…1032 × 0…813</dd>
+<dt>Ш×В</dt><dd>915×1171 / 823×813</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Капитальная: стем 265, перекладина до 1030, концевая засечка 250. Строчная: стем 300, плечо до 900, нижняя засечка 540; верх 731.</p>
+</article>
+<article class="glyph-card" id="g-0417">
+<div class="pair">З / з <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">З з</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">C c</span></div>
+<dl class="metrics">
+<dt>BBox З</dt><dd>143…1093 × -17…1187</dd>
+<dt>BBox з</dt><dd>289…950 × -17…813</dd>
+<dt>Ш×В</dt><dd>950×1204 / 661×830</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Непрерывная лента с изломом в талии; капитальная −17…1187, строчная −17…813; толщина ленты 92/88. Верх и низ выровнены с O/o.</p>
+</article>
+<article class="glyph-card" id="g-0418">
+<div class="pair">И / и <span class="badge">V5 → V6: без изменений</span></div>
+<div class="glyph-display">И и</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">N n</span></div>
+<dl class="metrics">
+<dt>BBox И</dt><dd>69…1172 × -16…1171</dd>
+<dt>BBox и</dt><dd>127…1113 × 0…813</dd>
+<dt>Ш×В</dt><dd>1103×1187 / 986×813</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Зеркальная N; диагональ входит в стемы; засечки 396. Капитальная 69…1172, строчная 127…1113.</p>
+</article>
+<article class="glyph-card" id="g-0419">
+<div class="pair">Й / й <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Й й</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">N n</span></div>
+<dl class="metrics">
+<dt>BBox Й</dt><dd>69…1172 × -16…1465</dd>
+<dt>BBox й</dt><dd>127…1113 × 0…1107</dd>
+<dt>Ш×В</dt><dd>1103×1481 / 986×1107</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>2 / 2</dd>
+</dl>
+<p class="note">И + бревис из донорного U+0102/0103; зазор 115; верх 1465/1107.</p>
+</article>
+<article class="glyph-card" id="g-041B">
+<div class="pair">Л / л <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Л л</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">L l</span></div>
+<dl class="metrics">
+<dt>BBox Л</dt><dd>46…1194 × 0…1171</dd>
+<dt>BBox л</dt><dd>91…1149 × 0…814</dd>
+<dt>Ш×В</dt><dd>1148×1171 / 1058×814</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Исключение по стему: 300 вместо 396. Широкая лапа 620/540; нога наклонена; капитальная 46…1194, строчная 91…1149.</p>
+</article>
+<article class="glyph-card" id="g-041C">
+<div class="pair">М / м <span class="badge">V5 → V6: без изменений</span></div>
+<div class="glyph-display">М м</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">M m</span></div>
+<dl class="metrics">
+<dt>BBox М</dt><dd>20…1220 × 0…1171</dd>
+<dt>BBox м</dt><dd>79…1161 × 0…821</dd>
+<dt>Ш×В</dt><dd>1200×1171 / 1082×821</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Капитальная — донорная M. Строчная: M-образная с вершиной 380; засечки 396; капитальная 20…1220, строчная 79…1161.</p>
+</article>
+<article class="glyph-card" id="g-0422">
+<div class="pair">Т / т <span class="badge">V5 → V6: без изменений</span></div>
+<div class="glyph-display">Т т</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">T t</span></div>
+<dl class="metrics">
+<dt>BBox Т</dt><dd>121…1119 × 0…1171</dd>
+<dt>BBox т</dt><dd>230…1010 × 0…813</dd>
+<dt>Ш×В</dt><dd>998×1171 / 780×813</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Капитальная — донорная T. Строчная: плоская перекладина 260–1040, стем 603, нижняя засечка 560.</p>
+</article>
+<article class="glyph-card" id="g-0423">
+<div class="pair">У / у <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">У у</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">Y y</span></div>
+<dl class="metrics">
+<dt>BBox У</dt><dd>10…1230 × -371…1171</dd>
+<dt>BBox у</dt><dd>125…1115 × -371…813</dd>
+<dt>Ш×В</dt><dd>1220×1542 / 990×1184</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Два плеча + загнутый хвост; глубина −371 у обеих; засечки 320/310; хвост не выходит за латинский десцендер.</p>
+</article>
+<article class="glyph-card" id="g-0424">
+<div class="pair">Ф / ф <span class="badge">V5 → V6: без изменений</span></div>
+<div class="glyph-display">Ф ф</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">O o</span></div>
+<dl class="metrics">
+<dt>BBox Ф</dt><dd>108…1132 × -120…1300</dd>
+<dt>BBox ф</dt><dd>196…1044 × -260…960</dd>
+<dt>Ш×В</dt><dd>1024×1420 / 848×1220</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>3 / 3</dd>
+</dl>
+<p class="note">Капитальная — O + стем 573, засечки 300 на −120/1300. Строчная — o + стем, засечки 300 на −260/960; два счётчика.</p>
+</article>
+<article class="glyph-card" id="g-0426">
+<div class="pair">Ц / ц <span class="badge">6.020</span></div>
+<div class="glyph-display">Ц ц</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">U u</span></div>
+<dl class="metrics">
+<dt>BBox Ц</dt><dd>104…1136 × -350…1171</dd>
+<dt>BBox ц</dt><dd>127…1113 × -330…813</dd>
+<dt>Ш×В</dt><dd>1032×1521 / 986×1143</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">6.020: тело — П/п, перевёрнутая по вертикали: планка 265–996 / 300–984 на базовой, засечки 396 сверху. Хвост как у Щ: 901–1147 / 890–1136, −350/−330; ширина 1032/986, как у П/п.</p>
+</article>
+<article class="glyph-card" id="g-0427">
+<div class="pair">Ч / ч <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Ч ч</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">t</span></div>
+<dl class="metrics">
+<dt>BBox Ч</dt><dd>95…1146 × 0…1171</dd>
+<dt>BBox ч</dt><dd>77…1164 × 0…813</dd>
+<dt>Ш×В</dt><dd>1051×1171 / 1087×813</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Стем + перекладина; перекладина заходит в стем на 50; засечки 396/420; капитальная 95…1146, строчная 77…1164.</p>
+</article>
+<article class="glyph-card" id="g-0428">
+<div class="pair">Ш / ш <span class="badge">V5 → V6: без изменений</span></div>
+<div class="glyph-display">Ш ш</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">W w</span></div>
+<dl class="metrics">
+<dt>BBox Ш</dt><dd>153…1088 × 0…1171</dd>
+<dt>BBox ш</dt><dd>165…1075 × 0…813</dd>
+<dt>Ш×В</dt><dd>935×1171 / 910×813</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Три стема 250/600/950 (280/620/960), нижняя планка, верхние засечки 235/230; капитальная 153…1088, строчная 165…1075.</p>
+</article>
+<article class="glyph-card" id="g-0429">
+<div class="pair">Щ / щ <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Щ щ</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">W w</span></div>
+<dl class="metrics">
+<dt>BBox Щ</dt><dd>120…1120 × -350…1171</dd>
+<dt>BBox щ</dt><dd>152…1089 × -330…813</dd>
+<dt>Ш×В</dt><dd>1000×1521 / 937×1143</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>1 / 1</dd>
+</dl>
+<p class="note">Ш + хвост 950–1180 / 960–1150, −350/−330; хвост 230/190; капитальная 120…1120, строчная 152…1089.</p>
+</article>
+<article class="glyph-card" id="g-042C">
+<div class="pair">Ь / ь <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Ь ь</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">b</span></div>
+<dl class="metrics">
+<dt>BBox Ь</dt><dd>198…1043 × 0…1171</dd>
+<dt>BBox ь</dt><dd>188…1053 × 0…813</dd>
+<dt>Ш×В</dt><dd>845×1171 / 865×813</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>2 / 3</dd>
+</dl>
+<p class="note">Стем + чаша; счётчик 508/500; чаша 92; капитальная 198…1043, строчная 188…1053.</p>
+</article>
+<article class="glyph-card" id="g-042B">
+<div class="pair">Ы / ы <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Ы ы</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">b + stem</span></div>
+<dl class="metrics">
+<dt>BBox Ы</dt><dd>52…1188 × 0…1171</dd>
+<dt>BBox ы</dt><dd>47…1193 × 0…813</dd>
+<dt>Ш×В</dt><dd>1136×1171 / 1146×813</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>3 / 3</dd>
+</dl>
+<p class="note">Стем + чаша + второй стем; зазор 182/135; второй стем 396; капитальная 52…1188, строчная 47…1193.</p>
+</article>
+<article class="glyph-card" id="g-042A">
+<div class="pair">Ъ / ъ <span class="badge">V5 → V6: без изменений</span></div>
+<div class="glyph-display">Ъ ъ</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">b + stem</span></div>
+<dl class="metrics">
+<dt>BBox Ъ</dt><dd>178…1063 × 0…1171</dd>
+<dt>BBox ъ</dt><dd>178…1063 × 0…817</dd>
+<dt>Ш×В</dt><dd>885×1171 / 885×817</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>2 / 3</dd>
+</dl>
+<p class="note">Стем 400 + верхнее плечо 200–400 + чаша; счётчик 484; капитальная 178…1063, строчная 178…1063 (верх 817).</p>
+</article>
+<article class="glyph-card" id="g-042E">
+<div class="pair">Ю / ю <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Ю ю</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">O o</span></div>
+<dl class="metrics">
+<dt>BBox Ю</dt><dd>35…1205 × -17…1187</dd>
+<dt>BBox ю</dt><dd>105…1135 × -15…815</dd>
+<dt>Ш×В</dt><dd>1170×1204 / 1030×830</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>2 / 2</dd>
+</dl>
+<p class="note">Стем 150/230 + чаша O/o 760/660; перекладина 150–472 / 230–480; капитальная 35…1205, строчная 105…1135.</p>
+</article>
+<article class="glyph-card" id="g-0414">
+<div class="pair">Д / д <span class="badge">V5 → V6: changed</span></div>
+<div class="glyph-display">Д д</div>
+<div class="latin-ref"><span>Ориентир латиницы</span><span class="latin">A a</span></div>
+<dl class="metrics">
+<dt>BBox Д</dt><dd>151…1089 × 0…1171</dd>
+<dt>BBox д</dt><dd>165…1075 × -140…813</dd>
+<dt>Ш×В</dt><dd>938×1171 / 910×953</dd>
+<dt>Advance</dt><dd>1240 / 1240</dd>
+<dt>Контуры</dt><dd>2 / 2</dd>
+</dl>
+<p class="note">Плита 165–1075 / 180–1040; верхняя перекладина 320–975 / 225–975; наклонная нога; капитальная 151…1089, строчная 165…1075 × −140…813.</p>
+</article>
+</div>
+</section>
+
+<section class="section" id="tse">
+<h2>Ц и ц — отдельный разбор</h2>
+<p class="lede">Буква недавно менялась: в 6.020 тело собрано как П/п, перевёрнутая по вертикали, а хвост повторяет конструкцию Щ. Ниже — крупный рисунок, метрики трёх версий, нижний выносной, соединения и сравнение с Ч/ч, Ш/ш, Щ/щ.</p>
+<div class="panel"><div class="tse-hero">Ц ц</div>
+<div class="compare">Ц ц &nbsp; Ч ч &nbsp; Ш ш &nbsp; Щ щ</div>
+<p class="note">Ц: bbox 104…1136 × −350…1171; advance 1240; ширина 1032; нижняя планка 265…996 × 0…86; верхние засечки 396×86; хвост 901…1147 × −350…−264. ц: bbox 127…1113 × −330…813; ширина 986; планка 300…984 × 0…82; хвост 890…1136 × −330…−248. Стем входит в планку на 20 ед.; лапа продолжает правый стем.</p>
+</div>
+<h3>Метрики V5 → 6.010 → 6.020</h3>
+<div class="table-wrap" style="max-height:none"><table class="tech-table"><thead><tr><th>Глиф</th><th>V5</th><th>6.010</th><th>6.020</th><th>6.020 Ш×В</th></tr></thead><tbody><tr><td class="glyph-cell">Ц</td><td class="mono">99…1141 × -300…1171</td><td class="mono">83…1158 × -350…1171</td><td class="mono">104…1136 × -350…1171</td><td class="mono">1032×1521</td></tr>
+<tr><td class="glyph-cell">ц</td><td class="mono">89…1152 × -280…813</td><td class="mono">120…1120 × -330…813</td><td class="mono">127…1113 × -330…813</td><td class="mono">986×1143</td></tr></tbody></table></div>
+<p class="lede" style="margin-top:10px">В 6.020 ширина Ц/ц стала равна ширине П/п: 1032/986. Хвост больше не расширяет букву — его лапа заканчивается на внешнем крае верхней засечки. Вариант с полной нижней планкой до краёв засечек (заливка Ц/П 1,22, ц/п 1,30) в 6.020 не выбран; текущий — 1,15/1,20.</p>
+<figure style="margin-top:16px"><a href="V6-REVIEW-SCREENSHOTS/tse.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/tse.png" alt="Ц и ц: крупный разбор" loading="lazy"></a><figcaption><b>tse.png</b> — крупный рисунок, сетка, bbox, увеличение хвоста и сравнение с Ч/Ш/Щ.</figcaption></figure>
+</section>
+
+<section class="section" id="texts">
+<h2>Контрольные тексты</h2>
+<p class="lede">Строки отрисованы выбранным режимом и кеглем. Для размерной лестницы ниже — отдельные блоки 11–24 px.</p>
+<div class="text-block"><div class="text-label">EN-1</div><div class="sample">The quick brown fox jumps over the lazy dog.</div></div>
+<div class="text-block"><div class="text-label">RU-1</div><div class="sample">Съешь же ещё этих мягких французских булок.</div></div>
+<div class="text-block"><div class="text-label">RU-2</div><div class="sample">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</div></div>
+<div class="text-block"><div class="text-label">RU-3</div><div class="sample">Дом. Жизнь. Это. Яблоко.</div></div>
+<div class="text-block"><div class="text-label">MIX-1</div><div class="sample">English + Русский + 1234567890</div></div>
+<div class="text-block"><div class="text-label">MIX-2</div><div class="sample">Arch Linux — операционная система на базе Linux.</div></div>
+<div class="text-block"><div class="text-label">MIX-3</div><div class="sample">$ git commit -m &quot;Добавлена кириллица&quot;</div></div>
+<div class="text-block"><div class="text-label">MIX-4</div><div class="sample">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</div></div>
+</section>
+
+<section class="section" id="sizes">
+<h2>Размеры 11–24 px</h2>
+<p class="lede">Каждый контрольный текст развёрнут в лестницу 11, 12, 13, 14, 16, 20, 24 px. Блоки можно сворачивать. Горизонтальная прокрутка — для длинных строк.</p>
+<details class="size-card" open><summary><b>EN-1</b> · The quick brown fox jumps over the lazy dog.</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">The quick brown fox jumps over the lazy dog.</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">The quick brown fox jumps over the lazy dog.</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">The quick brown fox jumps over the lazy dog.</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">The quick brown fox jumps over the lazy dog.</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">The quick brown fox jumps over the lazy dog.</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">The quick brown fox jumps over the lazy dog.</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">The quick brown fox jumps over the lazy dog.</span></div></details>
+<details class="size-card"><summary><b>RU-1</b> · Съешь же ещё этих мягких французских булок.</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">Съешь же ещё этих мягких французских булок.</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">Съешь же ещё этих мягких французских булок.</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">Съешь же ещё этих мягких французских булок.</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">Съешь же ещё этих мягких французских булок.</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">Съешь же ещё этих мягких французских булок.</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">Съешь же ещё этих мягких французских булок.</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">Съешь же ещё этих мягких французских булок.</span></div></details>
+<details class="size-card"><summary><b>RU-2</b> · В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!</span></div></details>
+<details class="size-card"><summary><b>RU-3</b> · Дом. Жизнь. Это. Яблоко.</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">Дом. Жизнь. Это. Яблоко.</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">Дом. Жизнь. Это. Яблоко.</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">Дом. Жизнь. Это. Яблоко.</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">Дом. Жизнь. Это. Яблоко.</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">Дом. Жизнь. Это. Яблоко.</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">Дом. Жизнь. Это. Яблоко.</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">Дом. Жизнь. Это. Яблоко.</span></div></details>
+<details class="size-card"><summary><b>MIX-1</b> · English + Русский + 1234567890</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">English + Русский + 1234567890</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">English + Русский + 1234567890</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">English + Русский + 1234567890</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">English + Русский + 1234567890</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">English + Русский + 1234567890</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">English + Русский + 1234567890</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">English + Русский + 1234567890</span></div></details>
+<details class="size-card"><summary><b>MIX-2</b> · Arch Linux — операционная система на базе Linux.</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">Arch Linux — операционная система на базе Linux.</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">Arch Linux — операционная система на базе Linux.</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">Arch Linux — операционная система на базе Linux.</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">Arch Linux — операционная система на базе Linux.</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">Arch Linux — операционная система на базе Linux.</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">Arch Linux — операционная система на базе Linux.</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">Arch Linux — операционная система на базе Linux.</span></div></details>
+<details class="size-card"><summary><b>MIX-3</b> · $ git commit -m &quot;Добавлена кириллица&quot;</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">$ git commit -m &quot;Добавлена кириллица&quot;</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">$ git commit -m &quot;Добавлена кириллица&quot;</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">$ git commit -m &quot;Добавлена кириллица&quot;</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">$ git commit -m &quot;Добавлена кириллица&quot;</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">$ git commit -m &quot;Добавлена кириллица&quot;</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">$ git commit -m &quot;Добавлена кириллица&quot;</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">$ git commit -m &quot;Добавлена кириллица&quot;</span></div></details>
+<details class="size-card"><summary><b>MIX-4</b> · Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace k…</summary><div class="size-row"><span class="size-tag">11 px</span><span class="sample-line" style="font-size:11px">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</span></div><div class="size-row"><span class="size-tag">12 px</span><span class="sample-line" style="font-size:12px">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</span></div><div class="size-row"><span class="size-tag">13 px</span><span class="sample-line" style="font-size:13px">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</span></div><div class="size-row"><span class="size-tag">14 px</span><span class="sample-line" style="font-size:14px">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</span></div><div class="size-row"><span class="size-tag">16 px</span><span class="sample-line" style="font-size:16px">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</span></div><div class="size-row"><span class="size-tag">20 px</span><span class="sample-line" style="font-size:20px">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</span></div><div class="size-row"><span class="size-tag">24 px</span><span class="sample-line" style="font-size:24px">Смешанная строка: the quick brown fox, «Жизнь», 42 ₽, № 7 — и снова кириллица. Monospace keeps every cell equal.</span></div></details>
+</section>
+
+<section class="section" id="screens">
+<h2>Скриншоты</h2>
+<p class="lede">PNG отрисованы напрямую из <code>installed-v6.ttf</code> через FreeType/PIL, без масштабирования готовых скриншотов. Для малых кеглей добавлен NEAREST-зум, чтобы были видны фактические пиксели.</p>
+<div class="gallery">
+<figure><a href="V6-REVIEW-SCREENSHOTS/alphabet.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/alphabet.png" alt="Полный кириллический алфавит" loading="lazy"></a><figcaption><b>Полный кириллический алфавит</b><br>33+33, украинские, белорусские, сербские/македонские, расширенная кириллица, № ₽.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/latin.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/latin.png" alt="Полная латиница" loading="lazy"></a><figcaption><b>Полная латиница</b><br>V6 и оригинальный Cutive Mono 1.110: заглавные, строчные, цифры, пунктуация.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/lowercase-uppercase.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/lowercase-uppercase.png" alt="Заглавные и строчные парами" loading="lazy"></a><figcaption><b>Заглавные и строчные парами</b><br>33 пары при 80 px.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/russian-text.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/russian-text.png" alt="Русские контрольные тексты" loading="lazy"></a><figcaption><b>Русские контрольные тексты</b><br>Контрольные предложения 34 px и длинный абзац 16 px.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/english-text.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/english-text.png" alt="Английские контрольные тексты" loading="lazy"></a><figcaption><b>Английские контрольные тексты</b><br>Панграмма 34 px и длинный абзац 16 px.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/mixed-text.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/mixed-text.png" alt="Смешанный текст EN/RU" loading="lazy"></a><figcaption><b>Смешанный текст EN/RU</b><br>Смешанные строки 34 px и длинный абзац 16 px.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/small-sizes.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/small-sizes.png" alt="Малые кегли 11–16 px" loading="lazy"></a><figcaption><b>Малые кегли 11–16 px</b><br>Фактический растр и увеличение NEAREST ×2/×3.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/large-sizes.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/large-sizes.png" alt="Крупные кегли 20–24 px" loading="lazy"></a><figcaption><b>Крупные кегли 20–24 px</b><br>Фактический растр.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/tse.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/tse.png" alt="Ц и ц — отдельный разбор" loading="lazy"></a><figcaption><b>Ц и ц — отдельный разбор</b><br>U-тело, нижний выносной, соединения, засечки, сравнение с Ч/Ш/Щ.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/problem-glyphs.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/problem-glyphs.png" alt="Проблемные буквы крупным планом" loading="lazy"></a><figcaption><b>Проблемные буквы крупным планом</b><br>20 пар при 120 px с ориентирами латиницы.</figcaption></figure>
+<figure><a href="V6-REVIEW-SCREENSHOTS/extended-issue.png" target="_blank"><img src="V6-REVIEW-SCREENSHOTS/extended-issue.png" alt="U+04B6/04B7: Ҷ/ҷ — фактически Zhe + breve" loading="lazy"></a><figcaption><b>U+04B6/04B7: Ҷ/ҷ — фактически Zhe + breve</b><br>Сравнение с Ӂ/ӂ и Ч/ч; семантическое несоответствие Unicode.</figcaption></figure>
+</div>
+</section>
+
+<section class="section" id="tech">
+<h2>Технический паспорт</h2>
+<h3>Идентификация</h3>
+<div class="table-wrap" style="max-height:none"><table class="tech-table"><tbody><tr><td>Установленный файл</td><td class="mono">/home/sora/.local/share/fonts/CutiveMonoCyrillic/CutiveMono-Cyrillic-Regular.ttf</td></tr>
+<tr><td>Семейство / подсемейство</td><td class="mono">Cutive Mono Cyrillic / Regular</td></tr>
+<tr><td>Full name / PostScript</td><td class="mono">Cutive Mono Cyrillic Regular / CutiveMonoCyrillic-Regular</td></tr>
+<tr><td>Version string</td><td class="mono">Version 6.020; ttfautohint (v1.8.4.16-eb64)</td></tr>
+<tr><td>Font Revision</td><td class="mono">6.020004</td></tr>
+<tr><td>UPM / ascent / descent</td><td class="mono">2048 / 1697 / -558</td></tr>
+<tr><td>Глифы / cmap / кириллица</td><td class="mono">582 / 577 / 128</td></tr>
+<tr><td>head.created</td><td class="mono">2012-09-19 19:30:31</td></tr>
+<tr><td>head.modified</td><td class="mono">2026-10-30 12:40:16</td></tr>
+<tr><td>mtime установленного файла</td><td class="mono">2026-10-30 15:41:27.081410</td></tr>
+<tr><td>Размер / SHA-256</td><td class="mono">129852 B / aaf8154e9983c661e88c4a3769266d2c4c1f3ff55a2cc063c5f1f397faac55f7</td></tr>
+<tr><td>Проектная сборка</td><td class="mono">/home/sora/Projects/Cutive-Mono-Cyrillic/fonts/CutiveMono-Cyrillic-Regular.ttf</td></tr>
+<tr><td>SHA-256 проектной сборки</td><td class="mono">aaf8154e9983c661e88c4a3769266d2c4c1f3ff55a2cc063c5f1f397faac55f7</td></tr>
+<tr><td>Совпадение установленного и проекта</td><td class="mono">ДА</td></tr>
+<tr><td>Оригинал</td><td class="mono">/home/sora/Projects/Cutive-Mono-Cyrillic/source/original/CutiveMono-Regular.ttf · Version 1.110; ttfautohint (v1.8.4.7-5d5b) · 96a36a00079058684982f61ee334323f8b501d7b68dcecd6049a4f9177e3a62c</td></tr>
+<tr><td>V5</td><td class="mono">/home/sora/Projects/Cutive-Mono-Cyrillic/backup/v5-fonts/CutiveMono-Cyrillic-Regular.ttf · Version 5.000</td></tr>
+<tr><td>V6.010</td><td class="mono">/home/sora/Projects/Cutive-Mono-Cyrillic/backup/v6-pre-tse-fonts/CutiveMono-Cyrillic-Regular.ttf · Version 6.010; ttfautohint (v1.8.4.16-eb64)</td></tr>
+<tr><td>Large</td><td class="mono">/home/sora/.local/share/fonts/CutiveMonoCyrillic/CutiveMono-Cyrillic-Large.ttf · Version 6.020; ttfautohint (v1.8.4.16-eb64) · 620a90ea7fa2d037a12341d65e46d811b8cf75ddd57008969423d6ab5910e730</td></tr></tbody></table></div>
+<h3>Проверки</h3>
+<div class="table-wrap" style="max-height:none"><table class="tech-table"><thead><tr><th>Проверка</th><th>Результат</th><th>Данные / метод</th></tr></thead><tbody><tr><td>Латиница: наличие 452 глифов</td><td><span class="status good">PASS</span></td><td>452/452; отсутствуют: 0</td></tr>
+<tr><td>Латиница: контуры бит-в-бит</td><td><span class="status good">PASS</span></td><td>изменено: 0 из 452</td></tr>
+<tr><td>Моноширинность / advance</td><td><span class="status good">PASS</span></td><td>1240 у 560; 0 у 16 combining; 165 у periodcentered (исключение)</td></tr>
+<tr><td>Кириллица: покрытие</td><td><span class="status good">PASS</span></td><td>128 кодпоинтов U+0400–U+04FF; 33+33 русских</td></tr>
+<tr><td>Расширенная кириллица: покрытие</td><td><span class="status good">PASS</span></td><td>UA 8, BE 2, MK/SR 22, EXT 30; № ₽; 16 combining</td></tr>
+<tr><td>U+04B6/04B7: семантика</td><td><span class="status bad">FAIL</span></td><td>Ҷ/ҷ = Zhe+breve (как Ӂ/ӂ); Unicode ожидает Che with descender; yMin=0</td></tr>
+<tr><td>Хинтинг кириллицы</td><td><span class="status good">PASS</span></td><td>128/128; без байткода: 0</td></tr>
+<tr><td>GSUB</td><td><span class="status good">PASS</span></td><td>aalt case ccmp frac liga locl ordn sups; 16 lookups</td></tr>
+<tr><td>GPOS</td><td><span class="status good">PASS</span></td><td>kern mark mkmk; 7 lookups</td></tr>
+<tr><td>Лигатуры и дроби</td><td><span class="status good">PASS</span></td><td>fi/fl → liga; 1/2 + frac → onehalf; 1o + ordn → ordmasculine</td></tr>
+<tr><td>NFC/NFD</td><td><span class="status good">PASS</span></td><td>28/28 пар дают одинаковый результат; GPOS-фолбэк для а+acute, щ+acute, с+cedilla</td></tr>
+<tr><td>cmap: дубликаты</td><td><span class="status good">PASS</span></td><td>2 субтаблицы, одинаковые; multi-mapped glyphs: 0</td></tr>
+<tr><td>Пустые/вырожденные глифы</td><td><span class="status good">PASS</span></td><td>verify.py: 0; audit.py: clean</td></tr>
+<tr><td>pathops simplify</td><td><span class="status good">PASS</span></td><td>128/128 кириллических глифов</td></tr>
+<tr><td>Повторяющиеся точки контуров</td><td><span class="status warn">NOTE</span></td><td>9 сегментов в 8 глифах; pathops simplify проходит</td></tr>
+<tr><td>TTF round-trip</td><td><span class="status good">PASS</span></td><td>fontTools save → reload, таблицы на месте</td></tr>
+<tr><td>OTF round-trip</td><td><span class="status good">PASS</span></td><td>проектный OTF: save → reload; OTF не установлен</td></tr>
+<tr><td>fc-scan</td><td><span class="status good">PASS</span></td><td>Cutive Mono Cyrillic / Regular / 394527</td></tr>
+<tr><td>ots-sanitize</td><td><span class="status warn">NOT RUN</span></td><td>утилита не установлена</td></tr>
+<tr><td>hb-shape</td><td><span class="status warn">NOT RUN</span></td><td>утилита не установлена; использован uharfbuzz</td></tr>
+<tr><td>Браузер @font-face</td><td><span class="status good">PASS</span></td><td>Chromium headless: V6Review и OriginalReview загружены (file:// и http://)</td></tr>
+<tr><td>Художественное качество</td><td><span class="status warn">MANUAL</span></td><td>автоматических выводов нет; материал для ревью</td></tr></tbody></table></div>
+<p class="lede" style="margin-top:12px">Полные отчёты: <a href="V6-TECHNICAL-REPORT.md">V6-TECHNICAL-REPORT.md</a> · <a href="V6-GLYPH-METRICS.csv">V6-GLYPH-METRICS.csv</a> · <a href="V6-CHANGES.md">V6-CHANGES.md</a> · <a href="V6-REVIEW-NOTES.md">V6-REVIEW-NOTES.md</a>.</p>
+<h3>Что не проверялось автоматически</h3>
+<ul class="clean">
+<li>Художественное качество, уместность формы и «характер» букв — только материал, без выводов.</li>
+<li>Печать, PDF-экспорт, растрирование во всех терминалах/браузерах/DPI.</li>
+<li>Полный ручной кернинг и оптические пары — в моноширинном шрифте advance фиксирован.</li>
+<li><code>ots-sanitize</code> и <code>hb-shape</code> не установлены; использованы fontTools, uharfbuzz, fc-scan.</li>
+<li>Оригинальный Cutive Mono не содержит кириллицы; режим «оригинал» для кириллицы — это fallback, а не рисунок донора.</li>
+</ul>
+</section>
+</main>
+
+<footer class="footer"><div class="wrap">
+Пакет подготовлен 2026-10-30. Шрифт, исходники, Fontconfig и системная установка не изменялись. Копии в <code>fonts/</code> — побайтовые копии установленного V6 и оригинального Cutive Mono. Проверяемая версия: <b>Version 6.020; ttfautohint (v1.8.4.16-eb64)</b>. SHA-256: <code>aaf8154e9983c661e88c4a3769266d2c4c1f3ff55a2cc063c5f1f397faac55f7</code>.
+</div></footer>
+<script>
+const body=document.body;
+const modeButtons=[...document.querySelectorAll('.mode-btn')];
+const modeStatus=document.getElementById('mode-status');
+const fontStatus=document.getElementById('font-status');
+const size=document.getElementById('size');
+const sizeOut=document.getElementById('size-out');
+function setMode(mode,label){
+  body.dataset.mode=mode;
+  modeButtons.forEach(b=>b.setAttribute('aria-pressed', b.dataset.mode===mode));
+  modeStatus.textContent=label;
+}
+modeButtons.forEach(b=>b.addEventListener('click',()=>{
+  const labels={v6:'V6 · установленный TTF',original:'Оригинальный Cutive Mono 1.110',system:'Системный fallback · DejaVu Sans Mono'};
+  setMode(b.dataset.mode,labels[b.dataset.mode]||b.dataset.mode);
+}));
+size.addEventListener('input',()=>{
+  document.documentElement.style.setProperty('--sample-size',size.value+'px');
+  sizeOut.textContent=size.value+' px';
+});
+sizeOut.textContent=size.value+' px';
+async function checkFonts(){
+  let v6=false, orig=false;
+  try{ await document.fonts.load('16px "V6Review"'); v6=document.fonts.check('16px "V6Review"'); }catch(e){}
+  try{ await document.fonts.load('16px "OriginalReview"'); orig=document.fonts.check('16px "OriginalReview"'); }catch(e){}
+  const parts=[];
+  parts.push('V6Review: '+(v6?'загружен':'НЕ загружен'));
+  parts.push('OriginalReview: '+(orig?'загружен':'НЕ загружен'));
+  fontStatus.textContent=parts.join(' · ');
+  fontStatus.className='status '+(v6&&orig?'good':'bad');
+}
+checkFonts();
+const rows=[...document.querySelectorAll('#glyph-table tbody tr')];
+const search=document.getElementById('search');
+const filters=[...document.querySelectorAll('.filter-btn')];
+let active='ALL';
+function applyFilter(){
+  const q=(search.value||'').toLowerCase().trim();
+  rows.forEach(r=>{
+    const block=r.dataset.block||'';
+    let okBlock=active==='ALL'||block===active||(active==='EXT'&&['UA','BE','MK_SR','EXT'].includes(block))||(active==='RU'&&['RU_CAPS','RU_LOWS'].includes(block));
+    const okQ=!q||r.dataset.search.includes(q);
+    r.style.display=(okBlock&&okQ)?'':'none';
+  });
+}
+filters.forEach(b=>b.addEventListener('click',()=>{
+  active=b.dataset.block;
+  filters.forEach(x=>x.setAttribute('aria-pressed',x===b));
+  applyFilter();
+}));
+search.addEventListener('input',applyFilter);
+applyFilter();
+</script>
+</body></html>
