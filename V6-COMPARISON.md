@@ -109,7 +109,7 @@
 `Ҷ`/`ҷ` (Che with descender) в V5, 6.010 и 6.020 собраны как **Zhe + breve**
 и совпадают с `Ӂ`/`ӂ` (U+04C1/04C2); у них `yMin = 0`, тогда как у
 Che with descender должен быть descender. В 6.020 это не исправлялось.
-Подробности — `V6-TECHNICAL-REPORT.md`, раздел 3a; визуально —
+Подробности — `V6-TECHNICAL-REPORT.md`, раздел 11.1; визуально —
 `screenshots/11-extended-issue.png`.
 
 ## 4. V6.020 — Ц/ц
